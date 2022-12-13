@@ -1,0 +1,6 @@
+[submodule "Submodules/GLShared"]
+	path = Submodules/GLShared
+	url = https://github.com/szymonm992/GLShared.git
+[submodule "Submodules/Automachine"]
+	path = Submodules/Automachine
+	url = https://github.com/szymonm992/Automachine_v2.git
