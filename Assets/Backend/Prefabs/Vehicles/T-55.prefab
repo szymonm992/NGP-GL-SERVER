@@ -224,6 +224,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5670989544842430168}
+  - component: {fileID: 6716418236446384411}
   m_Layer: 0
   m_Name: Axle
   m_TagString: Untagged
@@ -248,6 +249,33 @@ Transform:
   m_Father: {fileID: 2361880001438542084}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6716418236446384411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378569318376402712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e396d7f48439464aa9b19f5fff0f02e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canDrive: 1
+  canSteer: 0
+  invertSteer: 0
+  debugSettings:
+    drawGizmos: 1
+    drawAxleCenter: 0
+    drawAxlePipes: 0
+    drawMode: 0
+  wheelPairs:
+  - wheel: {fileID: 4746051512056215765}
+    axis: -1
+  - wheel: {fileID: 5169629100520736474}
+    axis: 1
+  applyAntiroll: 0
+  antiRollForce: 0
 --- !u!1 &384858757296069625
 GameObject:
   m_ObjectHideFlags: 0
@@ -3834,6 +3862,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2494481231463085578}
+  - component: {fileID: 8857275834998994953}
   m_Layer: 0
   m_Name: Axle
   m_TagString: Untagged
@@ -3858,6 +3887,33 @@ Transform:
   m_Father: {fileID: 2361880001438542084}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8857275834998994953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2886606190522253613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e396d7f48439464aa9b19f5fff0f02e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canDrive: 1
+  canSteer: 1
+  invertSteer: 1
+  debugSettings:
+    drawGizmos: 1
+    drawAxleCenter: 0
+    drawAxlePipes: 0
+    drawMode: 0
+  wheelPairs:
+  - wheel: {fileID: 2870608802289494690}
+    axis: -1
+  - wheel: {fileID: 3672848904864979659}
+    axis: 1
+  applyAntiroll: 0
+  antiRollForce: 0
 --- !u!1 &2972820948179900508
 GameObject:
   m_ObjectHideFlags: 0
@@ -3961,6 +4017,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2548180648662566541}
+  - component: {fileID: 8774467299996331496}
   m_Layer: 0
   m_Name: Axle
   m_TagString: Untagged
@@ -3985,6 +4042,33 @@ Transform:
   m_Father: {fileID: 2361880001438542084}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8774467299996331496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3012222826262770090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e396d7f48439464aa9b19f5fff0f02e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canDrive: 1
+  canSteer: 1
+  invertSteer: 0
+  debugSettings:
+    drawGizmos: 1
+    drawAxleCenter: 0
+    drawAxlePipes: 0
+    drawMode: 0
+  wheelPairs:
+  - wheel: {fileID: 633855192755843383}
+    axis: -1
+  - wheel: {fileID: 2595758467875513928}
+    axis: 1
+  applyAntiroll: 0
+  antiRollForce: 0
 --- !u!1 &3084000783462598709
 GameObject:
   m_ObjectHideFlags: 0
@@ -7454,6 +7538,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6729218180491318893}
+  - component: {fileID: 1118836853492477769}
   m_Layer: 0
   m_Name: Axle
   m_TagString: Untagged
@@ -7478,6 +7563,33 @@ Transform:
   m_Father: {fileID: 2361880001438542084}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1118836853492477769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6337576465398276426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e396d7f48439464aa9b19f5fff0f02e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canDrive: 1
+  canSteer: 1
+  invertSteer: 0
+  debugSettings:
+    drawGizmos: 1
+    drawAxleCenter: 0
+    drawAxlePipes: 0
+    drawMode: 0
+  wheelPairs:
+  - wheel: {fileID: 4085733285540991049}
+    axis: -1
+  - wheel: {fileID: 7150626084281803390}
+    axis: 1
+  applyAntiroll: 0
+  antiRollForce: 0
 --- !u!1 &6364528611701590919
 GameObject:
   m_ObjectHideFlags: 0
@@ -10602,6 +10714,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7979952915366398473}
+  - component: {fileID: 8010215057989569799}
   m_Layer: 0
   m_Name: AxleIdlerForward
   m_TagString: Untagged
@@ -10626,6 +10739,31 @@ Transform:
   m_Father: {fileID: 2361880001438542084}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8010215057989569799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7979952915366398478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 642744bf4d090404ea345a3adc444d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canDrive: 1
+  canSteer: 1
+  invertSteer: 0
+  debugSettings:
+    drawGizmos: 1
+    drawAxleCenter: 0
+    drawAxlePipes: 0
+    drawMode: 0
+  wheelPairs:
+  - wheel: {fileID: 3449597406145042931}
+    axis: -1
+  - wheel: {fileID: 3449597405689525063}
+    axis: 1
 --- !u!1 &7979952916177711186
 GameObject:
   m_ObjectHideFlags: 0
@@ -10635,6 +10773,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7979952916177711197}
+  - component: {fileID: 5198095909958863098}
   m_Layer: 0
   m_Name: AxleIdlerBackward
   m_TagString: Untagged
@@ -10659,6 +10798,31 @@ Transform:
   m_Father: {fileID: 2361880001438542084}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5198095909958863098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7979952916177711186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 642744bf4d090404ea345a3adc444d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canDrive: 1
+  canSteer: 1
+  invertSteer: 1
+  debugSettings:
+    drawGizmos: 1
+    drawAxleCenter: 0
+    drawAxlePipes: 0
+    drawMode: 0
+  wheelPairs:
+  - wheel: {fileID: 7627841231469757009}
+    axis: -1
+  - wheel: {fileID: 7627841231649548517}
+    axis: 1
 --- !u!1 &8024637472886457805
 GameObject:
   m_ObjectHideFlags: 0
@@ -11261,6 +11425,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8686267833947866555}
+  - component: {fileID: 3389573995372216835}
   m_Layer: 0
   m_Name: Axle
   m_TagString: Untagged
@@ -11285,6 +11450,33 @@ Transform:
   m_Father: {fileID: 2361880001438542084}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3389573995372216835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8610706084986375168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e396d7f48439464aa9b19f5fff0f02e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canDrive: 1
+  canSteer: 1
+  invertSteer: 1
+  debugSettings:
+    drawGizmos: 1
+    drawAxleCenter: 0
+    drawAxlePipes: 0
+    drawMode: 0
+  wheelPairs:
+  - wheel: {fileID: 8587861120651377621}
+    axis: -1
+  - wheel: {fileID: 3033692851342630394}
+    axis: 1
+  applyAntiroll: 0
+  antiRollForce: 0
 --- !u!1 &8662022885877921227
 GameObject:
   m_ObjectHideFlags: 0
