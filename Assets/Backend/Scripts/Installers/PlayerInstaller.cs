@@ -1,9 +1,6 @@
-using GLShared.General.Interfaces;
+using GLShared.General.Components;
 using GLShared.General.Models;
 using GLShared.Networking.Components;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Zenject;
 
 namespace Backend.Scripts
@@ -15,7 +12,7 @@ namespace Backend.Scripts
             Container.BindInitializableExecutionOrder<PlayerEntity>(+10);
             //Container.BindInitializableExecutionOrder<UTVehicleController>(+20);
 
-            //Container.BindInterfacesAndSelfTo<UTAxleBase>().FromComponentsInHierarchy().AsCached();
+            Container.BindInterfacesAndSelfTo<UTAxleBase>().FromComponentsInHierarchy().AsCached();
             Container.BindInterfacesAndSelfTo<UTPhysicWheelBase>().FromComponentsInHierarchy().AsCached().NonLazy();
         }
     }
