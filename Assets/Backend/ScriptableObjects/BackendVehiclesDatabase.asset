@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allVehicles:
   - vehicleName: T-55
-    vehiclePrefab: {fileID: 0}
+    vehiclePrefab: {fileID: 1395896539053796136, guid: eeed3a42fb114974db7d9a7bc0df26ae, type: 3}
