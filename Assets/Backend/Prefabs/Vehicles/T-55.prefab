@@ -7607,6 +7607,7 @@ GameObject:
   - component: {fileID: 223968277071842181}
   - component: {fileID: 6812043851141715961}
   - component: {fileID: 7744036414676849148}
+  - component: {fileID: 6212946819241629232}
   m_Layer: 0
   m_Name: T-55
   m_TagString: Untagged
@@ -7712,6 +7713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _components:
   - {fileID: 7744036414676849148}
+  - {fileID: 6212946819241629232}
   _identifier: 
   _useSceneContext: 0
   _context: {fileID: 0}
@@ -7768,6 +7770,88 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectType: 0
   isLocalPlayer: 0
+--- !u!114 &6212946819241629232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6364528611701590919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d14a5b989b5524f9b88c42d624f6ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerOfMass: {fileID: 827835342807614448}
+  centerOfMassUngrounded: {fileID: 4157537771192790092}
+  vehicleType: 2
+  maxSlopeAngle: 45
+  enginePowerCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 80000
+      inSlope: -985.7143
+      outSlope: -2000
+      tangentMode: 65
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 10
+      value: 60000
+      inSlope: -2000
+      outSlope: -6800
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 15
+      value: 26000
+      inSlope: -6800
+      outSlope: -1100
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 25
+      value: 15000
+      inSlope: -1100
+      outSlope: -166.66667
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 55
+      value: 10000
+      inSlope: -166.66667
+      outSlope: -320
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 80
+      value: 2000
+      inSlope: -320
+      outSlope: -985.7143
+      tangentMode: 5
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  doesGravityDamping: 0
+  wheelsCollisionDetectionMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
+  brakesForceApplyPoint: 1
+  accelerationForceApplyPoint: 1
 --- !u!1 &6408284720671623042
 GameObject:
   m_ObjectHideFlags: 0
