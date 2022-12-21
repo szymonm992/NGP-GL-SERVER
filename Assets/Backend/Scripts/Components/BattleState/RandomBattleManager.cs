@@ -1,10 +1,12 @@
 using Automachine.Scripts.Components;
 using Automachine.Scripts.Signals;
+
 using GLShared.General.Components;
 using GLShared.General.Enums;
 using GLShared.General.Interfaces;
 using GLShared.General.ScriptableObjects;
 using GLShared.General.Signals;
+
 using UnityEngine;
 using Zenject;
 
