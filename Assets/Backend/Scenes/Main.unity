@@ -297,6 +297,7 @@ GameObject:
   - component: {fileID: 1181965783}
   - component: {fileID: 1181965785}
   - component: {fileID: 1181965786}
+  - component: {fileID: 1181965787}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -319,6 +320,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 1181965785}
+  - {fileID: 1181965787}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -380,6 +382,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HOST: 127.0.0.1
   PORT: 9933
+--- !u!114 &1181965787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181965782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e791789666f31bb40b81d3b7506d0a78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vehiclesDatabase: {fileID: 11400000, guid: d9279514221b1bb48b1c9b1ead1c0d17, type: 2}
 --- !u!1 &1926579105
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,14 +453,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugSettings:
-    logFoundMatchingEnums: 1
-    logCreatingStates: 1
-    logBindingDefaultStates: 1
-    logConnectedMonoType: 1
-    logCreatedStatesAmount: 1
+    logFoundMatchingEnums: 0
+    logCreatingStates: 0
+    logBindingDefaultStates: 0
+    logConnectedMonoType: 0
+    logCreatedStatesAmount: 0
     logLaunchingDefaultState: 1
     logSwitchingState: 1
-    logFoundSignals: 1
+    logFoundSignals: 0
 --- !u!114 &1926579109
 MonoBehaviour:
   m_ObjectHideFlags: 0

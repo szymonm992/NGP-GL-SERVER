@@ -1,3 +1,4 @@
+using Backend.Scripts.Models;
 using Backend.Scripts.Signals;
 using Frontend.Scripts;
 using GLShared.General.Interfaces;
@@ -38,7 +39,9 @@ namespace Backend.Scripts
         }
         private void InstallNetworkComponents()
         {
+            Container.Bind<SmartFoxConnection>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.Bind<GameParameters>().FromInstance(gameParameters).AsSingle();
+            Container.BindInterfacesAndSelfTo<RoomManager>().FromNew().AsSingle();
         }
 
         private void InstallSignals()
