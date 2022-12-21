@@ -7,7 +7,6 @@ using Sfs2X.Requests;
 using Sfs2X.Util;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
 using Zenject;
 
@@ -21,6 +20,7 @@ namespace Backend.Scripts.Models
 
         private const string ADMIN_USER_PWD = "777 777 777";
         private const string ZONE_NAME = "GLServerGateway";
+
         public void Initialize()
         {
             ConnectToServerGateway();
