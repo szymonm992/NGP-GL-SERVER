@@ -35,7 +35,7 @@ namespace Backend.Scripts.Components
 
         public void Initialize()
         {
-            this.currentInput = currentInput.Empty();
+            this.currentInput = currentInput.EmptyPlayerInput();
             signalBus.Subscribe<PlayerSignals.OnAllPlayersInputLockUpdate>(OnAllPlayersInputLockUpdate);
         }
 
@@ -46,7 +46,7 @@ namespace Backend.Scripts.Components
                 this.lastVertical = currentInput.Vertical;
             }
 
-            this.currentInput = lockPlayerInput ? currentInput.Empty() : input;
+            this.currentInput = lockPlayerInput ? currentInput.EmptyPlayerInput() : input;
         }
 
         private void OnAllPlayersInputLockUpdate(PlayerSignals.OnAllPlayersInputLockUpdate OnAllPlayersInputLockUpdate)

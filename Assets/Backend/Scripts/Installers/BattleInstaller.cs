@@ -39,8 +39,6 @@ namespace Backend.Scripts
         private void InstallNetworkComponents()
         {
             Container.Bind<GameParameters>().FromInstance(gameParameters).AsSingle();
-            Container.BindInterfacesAndSelfTo<IVehiclesDatabase>().FromInstance(vehiclesDatabase).AsCached();
-            Container.BindInterfacesAndSelfTo<ISyncManager>().FromComponentInHierarchy().AsCached();
         }
 
         private void InstallSignals()
