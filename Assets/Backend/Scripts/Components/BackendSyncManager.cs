@@ -22,6 +22,12 @@ namespace Backend.Scripts.Components
         private int spanwedPlayersAmount = 0;
 
         public int SpawnedPlayersAmount => spanwedPlayersAmount;
+        public double CurrentServerTime => 0;
+
+        public void Initialize()
+        {
+
+        }
 
         public void CreatePlayer(bool isLocal, string vehicleName, Vector3 spawnPosition, Quaternion spawnRotation)
         {
