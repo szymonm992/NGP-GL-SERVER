@@ -12,7 +12,7 @@ using Zenject;
 
 namespace Backend.Scripts.Components
 {
-    public class RandomBattleManager : AutomachineEntity<BattleStage>
+    public class RandomBattleManager : AutomachineEntity<BattleStage>, IBattleManager
     {
         [Inject] private readonly ISyncManager syncManager;
         [Inject] private readonly RandomBattleParameters battleParameters;
@@ -21,6 +21,9 @@ namespace Backend.Scripts.Components
 
         private BattleCountdownStage countdownState;
         private bool trackCountdown;
+        private BattleStage currentBattleStage;
+
+        public BattleStage CurrentBattleStage => currentBattleStage;
 
         public override void OnStateMachineInitialized(OnStateMachineInitialized<BattleStage> OnStateMachineInitialized)
         {
@@ -41,6 +44,8 @@ namespace Backend.Scripts.Components
         public void OnStateEnter(OnStateEnter<BattleStage> OnStateEnter)
         {
             var newState = OnStateEnter.signalStateStarted;
+            currentBattleStage = newState;
+
             var lockPlayerInput = newState != BattleStage.InProgress;
             trackCountdown = newState == BattleStage.Countdown;
 

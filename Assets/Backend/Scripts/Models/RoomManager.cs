@@ -1,4 +1,7 @@
+using Backend.Scripts.Components;
 using Backend.Scripts.Signals;
+using GLShared.General.Enums;
+using GLShared.General.Interfaces;
 using GLShared.Networking.Components;
 using Sfs2X;
 using Sfs2X.Core;
@@ -17,6 +20,7 @@ namespace Backend.Scripts.Models
     {
         [Inject] private readonly SignalBus signalBus;
         [Inject] private readonly SmartFoxConnection connection;
+        [Inject] private readonly IBattleManager battleManager;
 
         private Room currentRoom;
 
@@ -32,10 +36,7 @@ namespace Backend.Scripts.Models
 
         private void OnGameStateChanged(SyncSignals.OnGameStateChanged OnGameStateChanged)
         {
-            ISFSObject data = new SFSObject();
-            data.PutInt("currentGameStage", OnGameStateChanged.CurrentGameStateIndex);
-            ExtensionRequest request = new ExtensionRequest("inbattle.gameStage", data, null, false);
-            connection.Connection.Send(request);
+            SendCurrentGameState(OnGameStateChanged.CurrentGameStateIndex);
         }
 
         private void ConnectToServerGateway()
@@ -52,7 +53,8 @@ namespace Backend.Scripts.Models
             connection.Connection.AddEventListener(SFSEvent.ROOM_JOIN_ERROR, OnRoomJoinError);
             connection.Connection.AddEventListener(SFSEvent.ROOM_JOIN, OnRoomJoin);
             connection.Connection.AddEventListener(SFSEvent.UDP_INIT, OnUDPInit);
-            connection.Connection.AddEventListener(SFSEvent.USER_EXIT_ROOM, OnExitRoom);
+            connection.Connection.AddEventListener(SFSEvent.USER_EXIT_ROOM, OnUserExitRoom);
+            connection.Connection.AddEventListener(SFSEvent.USER_ENTER_ROOM, OnUserEnterRoom);
 
             ConfigData serverConfig = new ConfigData();
             serverConfig.Host = "127.0.0.1";
@@ -123,6 +125,14 @@ namespace Backend.Scripts.Models
             connection.Connection.InitUDP();
         }
 
+        private void SendCurrentGameState(int gameStateIndex)
+        {
+            ISFSObject data = new SFSObject();
+            data.PutInt("currentGameStage", gameStateIndex);
+            ExtensionRequest request = new ExtensionRequest("inbattle.gameStage", data, null, false);
+            connection.Connection.Send(request);
+        }
+
         private void SendRoomJoinRequest(string cmd, ISFSObject data)
         {
             Room room = connection.Connection.LastJoinedRoom;
@@ -136,9 +146,20 @@ namespace Backend.Scripts.Models
         }
 
         #region ERROR/DISCONNECT
-        private void OnExitRoom(BaseEvent evt)
+        private void OnUserExitRoom(BaseEvent evt)
         {
             SFSUser user = (SFSUser)evt.Params["user"];
+            // left_users.Add(user.Name);
+            //players.Remove(user);
+        }
+        
+        private void OnUserEnterRoom(BaseEvent evt)
+        {
+            SFSUser user = (SFSUser)evt.Params["user"];
+            if(battleManager.CurrentBattleStage != BattleStage.Beginning)
+            {
+                SendCurrentGameState((int)battleManager.CurrentBattleStage);
+            }
             // left_users.Add(user.Name);
             //players.Remove(user);
         }
