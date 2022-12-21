@@ -10,7 +10,7 @@ using GLShared.General.Utilities;
 
 namespace Backend.Scripts.Components
 {
-    public class BackendInputProvider : MonoBehaviour, IInitializable, IPlayerInputProvider
+    public class BackendInputProvider : MonoBehaviour, IInitializable, IPlayerInputProvider, IMouseActionsProvider
     {
         [Inject] private readonly SignalBus signalBus;
 
@@ -29,6 +29,9 @@ namespace Backend.Scripts.Components
         public float LastVerticalInput => lastVertical;
         public bool SnipingKey => false;
         public bool TurretLockKey => currentInput.TurretLockKey;
+        public bool LockPlayerInput => lockPlayerInput;
+
+        public Vector3 CameraTargetingPosition => currentInput.CameraTargetingPosition;
 
         public void Initialize()
         {

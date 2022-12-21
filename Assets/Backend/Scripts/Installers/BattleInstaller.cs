@@ -3,6 +3,7 @@ using Frontend.Scripts;
 using GLShared.General.Interfaces;
 using GLShared.General.Models;
 using GLShared.General.ScriptableObjects;
+using GLShared.General.Signals;
 using GLShared.Networking.Components;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,21 +20,18 @@ namespace Backend.Scripts
 
         public override void InstallBindings()
         {
+            InstallSignals();
             InstallMain();
             InstallNetworkComponents();
         }
 
         private void InstallMain()
         {
-            SignalBusInstaller.Install(Container);
-
-            //PLAYER SPAWNING========
+            //PLAYER SPAWNING SHARED LOGIC========
             Container.BindInterfacesAndSelfTo<PlayerSpawner>().FromNewComponentOnNewGameObject().AsCached().NonLazy();
             Container.Bind<PlayerProperties>().FromInstance(new PlayerProperties()).AsCached();
             Container.BindFactory<PlayerEntity, PlayerProperties, PlayerEntity, PlayerSpawner.Factory>().FromSubContainerResolve()
                 .ByInstaller<PlayerSpawner.PlayerInstaller>();
-
-            Container.DeclareSignal<SyncSignals.OnPlayerSpawned>();
             //=======================
 
             Container.BindInterfacesAndSelfTo<RandomBattleParameters>().FromInstance(randomBattleParameters).AsSingle();
@@ -43,6 +41,19 @@ namespace Backend.Scripts
             Container.Bind<GameParameters>().FromInstance(gameParameters).AsSingle();
             Container.BindInterfacesAndSelfTo<IVehiclesDatabase>().FromInstance(vehiclesDatabase).AsCached();
             Container.BindInterfacesAndSelfTo<ISyncManager>().FromComponentInHierarchy().AsCached();
+        }
+
+        private void InstallSignals()
+        {
+            SignalBusInstaller.Install(Container);
+
+            //shared signals
+            Container.DeclareSignal<PlayerSignals.OnPlayerInitialized>();
+            Container.DeclareSignal<PlayerSignals.OnPlayerSpawned>();
+            Container.DeclareSignal<PlayerSignals.OnAllPlayersInputLockUpdate>();
+
+            //backend signals
+            Container.DeclareSignal<SyncSignals.OnPlayerSpawned>();
         }
     }
 }
