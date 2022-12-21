@@ -55,6 +55,8 @@ namespace Backend.Scripts
 
             //backend signals
             Container.DeclareSignal<SyncSignals.OnPlayerSpawned>();
+            Container.DeclareSignal<SyncSignals.OnGameStateChanged>();
+            Container.DeclareSignal<SyncSignals.OnGameCountdownUpdate>();
         }
     }
 }

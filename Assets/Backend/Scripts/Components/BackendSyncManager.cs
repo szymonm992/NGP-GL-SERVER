@@ -1,3 +1,4 @@
+using Backend.Scripts.Models;
 using Backend.Scripts.Signals;
 using Frontend.Scripts;
 using GLShared.General.Interfaces;
@@ -16,6 +17,7 @@ namespace Backend.Scripts.Components
         [Inject] private readonly IVehiclesDatabase vehicleDatabase;
         [Inject] private readonly PlayerSpawner playerSpawner;
         [Inject] private readonly SignalBus signalBus;
+        [Inject] private readonly RoomManager roomManager;
 
         private readonly Dictionary<string, INetworkEntity> connectedPlayers = new Dictionary<string, INetworkEntity>();
 
@@ -26,7 +28,7 @@ namespace Backend.Scripts.Components
 
         public void Initialize()
         {
-
+            
         }
 
         public void CreatePlayer(bool isLocal, string vehicleName, Vector3 spawnPosition, Quaternion spawnRotation)

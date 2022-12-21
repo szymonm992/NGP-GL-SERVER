@@ -1,3 +1,4 @@
+using Backend.Scripts.Signals;
 using GLShared.Networking.Components;
 using Sfs2X;
 using Sfs2X.Core;
@@ -14,7 +15,8 @@ namespace Backend.Scripts.Models
 {
     public class RoomManager : IInitializable, ITickable
     {
-        [Inject] private SmartFoxConnection connection;
+        [Inject] private readonly SignalBus signalBus;
+        [Inject] private readonly SmartFoxConnection connection;
 
         private Room currentRoom;
 
@@ -23,7 +25,17 @@ namespace Backend.Scripts.Models
 
         public void Initialize()
         {
+            signalBus.Subscribe<SyncSignals.OnGameStateChanged>(OnGameStateChanged);
+            signalBus.Subscribe<SyncSignals.OnGameCountdownUpdate>(OnGameCountdownUpdate);
             ConnectToServerGateway();
+        }
+
+        private void OnGameStateChanged(SyncSignals.OnGameStateChanged OnGameStateChanged)
+        {
+            ISFSObject data = new SFSObject();
+            data.PutInt("currentGameStage", OnGameStateChanged.CurrentGameStateIndex);
+            ExtensionRequest request = new ExtensionRequest("inbattle.gameStage", data, null, false);
+            connection.Connection.Send(request);
         }
 
         private void ConnectToServerGateway()
@@ -50,6 +62,14 @@ namespace Backend.Scripts.Models
             serverConfig.UdpPort = 9933;
 
             connection.Connection.Connect(serverConfig);
+        }
+
+        private void OnGameCountdownUpdate(SyncSignals.OnGameCountdownUpdate OnGameCountdownUpdate)
+        {
+            ISFSObject data = new SFSObject();
+            data.PutInt("currentCountdownValue", OnGameCountdownUpdate.CurrentCountdownValue);
+            ExtensionRequest request = new ExtensionRequest("inbattle.gameStartCountdown", data, null, false);
+            connection.Connection.Send(request);
         }
 
         private void OnExtensionResponse(BaseEvent evt)

@@ -10,7 +10,16 @@ namespace Backend.Scripts.Signals
         public class OnPlayerSpawned
         {
             public PlayerProperties PlayerProperties { get; set; }
+        }
 
+        public class OnGameStateChanged
+        {
+            public int CurrentGameStateIndex { get; set; }
+        }
+
+        public class OnGameCountdownUpdate
+        {
+            public int CurrentCountdownValue { get; set; }
         }
     }
 }

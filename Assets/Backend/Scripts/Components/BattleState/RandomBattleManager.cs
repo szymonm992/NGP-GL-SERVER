@@ -1,6 +1,6 @@
 using Automachine.Scripts.Components;
 using Automachine.Scripts.Signals;
-
+using Backend.Scripts.Signals;
 using GLShared.General.Components;
 using GLShared.General.Enums;
 using GLShared.General.Interfaces;
@@ -20,6 +20,7 @@ namespace Backend.Scripts.Components
         [SerializeField] private bool allPlayersConnectionsEstablished = true;
 
         private BattleCountdownStage countdownState;
+        private bool trackCountdown;
 
         public override void OnStateMachineInitialized(OnStateMachineInitialized<BattleStage> OnStateMachineInitialized)
         {
@@ -39,11 +40,38 @@ namespace Backend.Scripts.Components
 
         public void OnStateEnter(OnStateEnter<BattleStage> OnStateEnter)
         {
-            bool lockPlayerInput = OnStateEnter.signalStateStarted != BattleStage.InProgress;
+            var newState = OnStateEnter.signalStateStarted;
+            var lockPlayerInput = newState != BattleStage.InProgress;
+            trackCountdown = newState == BattleStage.Countdown;
+
             signalBus.Fire(new PlayerSignals.OnAllPlayersInputLockUpdate()
             {
                 LockPlayersInput = lockPlayerInput
             });
+
+            signalBus.Fire(new SyncSignals.OnGameStateChanged()
+            {
+                CurrentGameStateIndex = (int)OnStateEnter.signalStateStarted,
+            });
+
+            
         }
+
+        protected override void Update()
+        {
+            if(trackCountdown)
+            {
+                var currentTimer = countdownState.CurrentIntegerTimer;
+
+                if(countdownState.PreviousIntegerTimer != currentTimer)
+                {
+                    signalBus.Fire(new SyncSignals.OnGameCountdownUpdate()
+                    {
+                        CurrentCountdownValue = currentTimer,
+                    });
+                }
+            }
+        }
+
     }
 }
