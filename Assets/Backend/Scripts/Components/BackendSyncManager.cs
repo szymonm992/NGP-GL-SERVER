@@ -36,15 +36,15 @@ namespace Backend.Scripts.Components
         {
             if(!connectedPlayers.ContainsKey(user.Name))
             {
-                CreatePlayer(false, user, new Vector3(132.35f, 2f, 118.99f), 
+                CreatePlayer(user, new Vector3(132.35f, 2f, 118.99f), 
                     Quaternion.Euler(0, 90f, 0));
             }
         }
 
-        private void CreatePlayer(bool isLocal, SFSUser user, Vector3 spawnPosition, Quaternion spawnRotation)
+        private void CreatePlayer(SFSUser user, Vector3 spawnPosition, Quaternion spawnRotation)
         {
             var vehicleName = user.GetVariable("playerVehicle").Value.ToString();
-            var playerProperties = GetPlayerInitData(isLocal, user, vehicleName, spawnPosition, spawnRotation);
+            var playerProperties = GetPlayerInitData(user, vehicleName, spawnPosition, spawnRotation);
             var prefabEntity = playerProperties.PlayerContext.gameObject.GetComponent<PlayerEntity>();//this references only to prefab
             var playerEntity = playerSpawner.Spawn(prefabEntity, playerProperties);
 
@@ -57,7 +57,7 @@ namespace Backend.Scripts.Components
             spanwedPlayersAmount++;
         }
 
-        private PlayerProperties GetPlayerInitData(bool isLocal, SFSUser user, string vehicleName, 
+        private PlayerProperties GetPlayerInitData(SFSUser user, string vehicleName, 
             Vector3 spawnPosition, Quaternion spawnRotation)
         {
             //TODO: handling check whether the player is local or not
@@ -69,7 +69,7 @@ namespace Backend.Scripts.Components
                 {
                     PlayerContext = vehicleData.VehiclePrefab,
                     PlayerVehicleName = vehicleData.VehicleName,
-                    IsLocal = isLocal,
+                    IsLocal = false,
                     SpawnPosition = spawnPosition,
                     SpawnRotation = spawnRotation,
                     User = user,
