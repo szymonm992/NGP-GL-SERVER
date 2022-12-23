@@ -21,6 +21,7 @@ namespace Backend.Scripts.Models
         [Inject] private readonly SignalBus signalBus;
         [Inject] private readonly SmartFoxConnection connection;
         [Inject] private readonly IBattleManager battleManager;
+        [Inject] private readonly ISyncManager syncManager;
 
         private Room currentRoom;
 
@@ -31,6 +32,7 @@ namespace Backend.Scripts.Models
         {
             signalBus.Subscribe<SyncSignals.OnGameStateChanged>(OnGameStateChanged);
             signalBus.Subscribe<SyncSignals.OnGameCountdownUpdate>(OnGameCountdownUpdate);
+            signalBus.Subscribe<SyncSignals.OnPlayerSpawned>(OnPlayerSpawned);
             ConnectToServerGateway();
         }
 
@@ -56,14 +58,16 @@ namespace Backend.Scripts.Models
             connection.Connection.AddEventListener(SFSEvent.USER_EXIT_ROOM, OnUserExitRoom);
             connection.Connection.AddEventListener(SFSEvent.USER_ENTER_ROOM, OnUserEnterRoom);
 
-            ConfigData serverConfig = new ConfigData();
-            serverConfig.Host = "127.0.0.1";
-            serverConfig.Port = 9933;
-            serverConfig.Zone = ZONE_NAME;
-            serverConfig.UdpHost = "127.0.0.1";
-            serverConfig.UdpPort = 9933;
+            ConfigData connectionConfigData = new ConfigData
+            {
+                Host = "127.0.0.1",
+                Port = 9933,
+                Zone = ZONE_NAME,
+                UdpHost = "127.0.0.1",
+                UdpPort = 9933,
+            };
 
-            connection.Connection.Connect(serverConfig);
+            connection.Connection.Connect(connectionConfigData);
         }
 
         private void OnGameCountdownUpdate(SyncSignals.OnGameCountdownUpdate OnGameCountdownUpdate)
@@ -71,6 +75,14 @@ namespace Backend.Scripts.Models
             ISFSObject data = new SFSObject();
             data.PutInt("currentCountdownValue", OnGameCountdownUpdate.CurrentCountdownValue);
             ExtensionRequest request = new ExtensionRequest("inbattle.gameStartCountdown", data, null, false);
+            connection.Connection.Send(request);
+        }
+
+        private void OnPlayerSpawned(SyncSignals.OnPlayerSpawned OnPlayerSpawned)
+        {
+            ISFSObject data = new SFSObject();
+            data.PutClass("playerProperties", OnPlayerSpawned.PlayerProperties);
+            ExtensionRequest request = new ExtensionRequest("inbattle.playerSpawned", data, null, false);
             connection.Connection.Send(request);
         }
 
@@ -156,10 +168,18 @@ namespace Backend.Scripts.Models
         private void OnUserEnterRoom(BaseEvent evt)
         {
             SFSUser user = (SFSUser)evt.Params["user"];
-            if(battleManager.CurrentBattleStage != BattleStage.Beginning)
+            if (user == connection.Connection.MySelf)
             {
-                SendCurrentGameState((int)battleManager.CurrentBattleStage);
+                if (battleManager.CurrentBattleStage != BattleStage.Beginning)
+                {
+                    SendCurrentGameState((int)battleManager.CurrentBattleStage);
+                }
             }
+            else
+            {
+                syncManager.TryCreatePlayer(user);
+            }
+            
             // left_users.Add(user.Name);
             //players.Remove(user);
         }

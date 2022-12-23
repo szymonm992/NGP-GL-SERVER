@@ -5,6 +5,7 @@ using GLShared.General.Interfaces;
 using GLShared.General.Models;
 using GLShared.Networking.Components;
 using GLShared.Networking.Interfaces;
+using Sfs2X.Entities;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace Backend.Scripts.Components
         [Inject] private readonly PlayerSpawner playerSpawner;
         [Inject] private readonly SignalBus signalBus;
         [Inject] private readonly RoomManager roomManager;
+        [Inject] private readonly SmartFoxConnection smartFox;
 
         private readonly Dictionary<string, INetworkEntity> connectedPlayers = new Dictionary<string, INetworkEntity>();
 
@@ -28,12 +30,21 @@ namespace Backend.Scripts.Components
 
         public void Initialize()
         {
-            
         }
 
-        public void CreatePlayer(bool isLocal, string vehicleName, Vector3 spawnPosition, Quaternion spawnRotation)
+        public void TryCreatePlayer(SFSUser user)
         {
-            var playerProperties = GetPlayerInitData(isLocal, vehicleName, spawnPosition, spawnRotation);
+            if(!connectedPlayers.ContainsKey(user.Name))
+            {
+                CreatePlayer(false, user, new Vector3(132.35f, 2f, 118.99f), 
+                    Quaternion.Euler(0, 90f, 0));
+            }
+        }
+
+        private void CreatePlayer(bool isLocal, SFSUser user, Vector3 spawnPosition, Quaternion spawnRotation)
+        {
+            var vehicleName = user.GetVariable("playerVehicle").Value.ToString();
+            var playerProperties = GetPlayerInitData(isLocal, user, vehicleName, spawnPosition, spawnRotation);
             var prefabEntity = playerProperties.PlayerContext.gameObject.GetComponent<PlayerEntity>();//this references only to prefab
             var playerEntity = playerSpawner.Spawn(prefabEntity, playerProperties);
 
@@ -42,11 +53,12 @@ namespace Backend.Scripts.Components
                 PlayerProperties = playerProperties,
             });    
 
-            connectedPlayers.Add("localPlayer", playerEntity);
+            connectedPlayers.Add(user.Name, playerEntity);
             spanwedPlayersAmount++;
         }
 
-        private PlayerProperties GetPlayerInitData(bool isLocal, string vehicleName, Vector3 spawnPosition, Quaternion spawnRotation)
+        private PlayerProperties GetPlayerInitData(bool isLocal, SFSUser user, string vehicleName, 
+            Vector3 spawnPosition, Quaternion spawnRotation)
         {
             //TODO: handling check whether the player is local or not
 
@@ -60,6 +72,7 @@ namespace Backend.Scripts.Components
                     IsLocal = isLocal,
                     SpawnPosition = spawnPosition,
                     SpawnRotation = spawnRotation,
+                    User = user,
                 };
             }
             return null;
