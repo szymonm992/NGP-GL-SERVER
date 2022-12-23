@@ -3,6 +3,7 @@ using Backend.Scripts.Signals;
 using GLShared.General.Enums;
 using GLShared.General.Interfaces;
 using GLShared.Networking.Components;
+using GLShared.Networking.Extensions;
 using Sfs2X;
 using Sfs2X.Core;
 using Sfs2X.Entities;
@@ -11,6 +12,7 @@ using Sfs2X.Requests;
 using Sfs2X.Util;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -80,8 +82,7 @@ namespace Backend.Scripts.Models
 
         private void OnPlayerSpawned(SyncSignals.OnPlayerSpawned OnPlayerSpawned)
         {
-            ISFSObject data = new SFSObject();
-            data.PutClass("playerProperties", OnPlayerSpawned.PlayerProperties);
+            ISFSObject data = OnPlayerSpawned.PlayerProperties.ToISFSOBject();
             ExtensionRequest request = new ExtensionRequest("inbattle.playerSpawned", data, null, false);
             connection.Connection.Send(request);
         }
@@ -155,14 +156,28 @@ namespace Backend.Scripts.Models
         private void OnRoomJoin(BaseEvent evt)
         {
             currentRoom = connection.Connection.LastJoinedRoom;
+
+            var userList = currentRoom.UserList.Where(u => !u.IsAdmin());
+
+            if (userList.Any())
+            {
+                foreach (var actualUser in userList)
+                {
+                    Debug.Log("creating player " + actualUser.Name + "|" + actualUser.IsAdmin());
+                    syncManager.TryCreatePlayer(actualUser, new Vector3(132.35f, 2f, 118.99f),
+                    Quaternion.Euler(0, 90f, 0));
+                }
+            }
+            else
+            {
+                Debug.Log("Did not find any player ");
+            }
         }
 
         #region ERROR/DISCONNECT
         private void OnUserExitRoom(BaseEvent evt)
         {
             SFSUser user = (SFSUser)evt.Params["user"];
-            // left_users.Add(user.Name);
-            //players.Remove(user);
         }
         
         private void OnUserEnterRoom(BaseEvent evt)
@@ -175,13 +190,6 @@ namespace Backend.Scripts.Models
                     SendCurrentGameState((int)battleManager.CurrentBattleStage);
                 }
             }
-            else
-            {
-                syncManager.TryCreatePlayer(user);
-            }
-            
-            // left_users.Add(user.Name);
-            //players.Remove(user);
         }
 
         private void OnConnectionLost(BaseEvent evt)

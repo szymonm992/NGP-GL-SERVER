@@ -32,16 +32,15 @@ namespace Backend.Scripts.Components
         {
         }
 
-        public void TryCreatePlayer(SFSUser user)
+        public void TryCreatePlayer(User user, Vector3 spawnPosition, Quaternion spawnRotation)
         {
             if(!connectedPlayers.ContainsKey(user.Name))
             {
-                CreatePlayer(user, new Vector3(132.35f, 2f, 118.99f), 
-                    Quaternion.Euler(0, 90f, 0));
+                CreatePlayer(user, spawnPosition, spawnRotation);
             }
         }
 
-        private void CreatePlayer(SFSUser user, Vector3 spawnPosition, Quaternion spawnRotation)
+        private void CreatePlayer(User user, Vector3 spawnPosition, Quaternion spawnRotation)
         {
             var vehicleName = user.GetVariable("playerVehicle").Value.ToString();
             var playerProperties = GetPlayerInitData(user, vehicleName, spawnPosition, spawnRotation);
@@ -57,7 +56,7 @@ namespace Backend.Scripts.Components
             spanwedPlayersAmount++;
         }
 
-        private PlayerProperties GetPlayerInitData(SFSUser user, string vehicleName, 
+        private PlayerProperties GetPlayerInitData(User user, string vehicleName, 
             Vector3 spawnPosition, Quaternion spawnRotation)
         {
             //TODO: handling check whether the player is local or not
