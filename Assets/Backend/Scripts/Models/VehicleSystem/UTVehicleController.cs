@@ -33,6 +33,7 @@ namespace Backend.Scripts.Models
         [SerializeField] protected AnimationCurve enginePowerCurve;
         [SerializeField] protected bool doesGravityDamping = true;
         [SerializeField] protected LayerMask wheelsCollisionDetectionMask;
+        [SerializeField] protected bool runPhysics = true;
 
         [Header("Force apply points")]
         [SerializeField] protected ForceApplyPoint brakesForceApplyPoint = ForceApplyPoint.WheelConstraintUpperPoint;
@@ -82,6 +83,7 @@ namespace Backend.Scripts.Models
         public bool DoesGravityDamping => doesGravityDamping;
         public bool IsUpsideDown => isUpsideDown;
         public bool HasTurret => hasTurret;
+        public bool RunPhysics => runPhysics;
         public LayerMask WheelsCollisionDetectionMask => wheelsCollisionDetectionMask;
         public ForceApplyPoint BrakesForceApplyPoint => brakesForceApplyPoint;
         public ForceApplyPoint AccelerationForceApplyPoint => accelerationForceApplyPoint;
