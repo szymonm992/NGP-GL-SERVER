@@ -34,11 +34,11 @@ namespace Backend.Scripts.Components
         {
         }
 
-        public void TryCreatePlayer(User user, Vector3 spawnPosition, Quaternion spawnRotation)
+        public void TryCreatePlayer(User user, Vector3 spawnPosition, Vector3 spawnEulerAngles)
         {
             if(!connectedPlayers.ContainsKey(user.Name))
             {
-                CreatePlayer(user, spawnPosition, spawnRotation);
+                CreatePlayer(user, spawnPosition, spawnEulerAngles);
             }
         }
 
@@ -52,10 +52,10 @@ namespace Backend.Scripts.Components
             }
         }
 
-        private void CreatePlayer(User user, Vector3 spawnPosition, Quaternion spawnRotation)
+        private void CreatePlayer(User user, Vector3 spawnPosition, Vector3 spawnEulerAngles)
         {
             var vehicleName = user.GetVariable("playerVehicle").Value.ToString();
-            var playerProperties = GetPlayerInitData(user, vehicleName, spawnPosition, spawnRotation);
+            var playerProperties = GetPlayerInitData(user, vehicleName, spawnPosition, spawnEulerAngles);
             var prefabEntity = playerProperties.PlayerContext.gameObject.GetComponent<PlayerEntity>();//this references only to prefab
             var playerEntity = playerSpawner.Spawn(prefabEntity, playerProperties);
 
@@ -69,7 +69,7 @@ namespace Backend.Scripts.Components
         }
 
         private PlayerProperties GetPlayerInitData(User user, string vehicleName, 
-            Vector3 spawnPosition, Quaternion spawnRotation)
+            Vector3 spawnPosition, Vector3 spawnEulerAngles)
         {
             //TODO: handling check whether the player is local or not
 
@@ -82,7 +82,7 @@ namespace Backend.Scripts.Components
                     PlayerVehicleName = vehicleData.VehicleName,
                     IsLocal = false,
                     SpawnPosition = spawnPosition,
-                    SpawnRotation = spawnRotation,
+                    SpawnRotation = Quaternion.Euler(spawnEulerAngles.x, spawnEulerAngles.y, spawnEulerAngles.z),
                     User = user,
                 };
             }

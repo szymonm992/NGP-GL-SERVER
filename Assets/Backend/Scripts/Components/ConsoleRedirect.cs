@@ -26,7 +26,7 @@ namespace Backend.Scripts.Components
         private void RedirectLog(string logString, string stackTrace, LogType type)
         {
             bool isCritical = (type == LogType.Error || type == LogType.Exception);
-            string newLog = "\n <b>["+type+"]</b> <color=" + (isCritical ? "red" : "white")+ ">"+ logString + "</color>";
+            string newLog = "\n\n <b><color=black>["+type+"]</color></b> <color=" + (isCritical ? "red" : "white")+ ">"+ logString + "</color>";
             currentOutput += newLog;
             consoleOutputText.text = currentOutput;
         }

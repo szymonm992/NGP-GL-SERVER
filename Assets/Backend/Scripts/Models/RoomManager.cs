@@ -163,9 +163,9 @@ namespace Backend.Scripts.Models
             {
                 foreach (var actualUser in userList)
                 {
-                    Debug.Log("creating player " + actualUser.Name + "|" + actualUser.IsAdmin());
+                    Debug.Log("[SERVERAPP DEBUG] Creating player " + actualUser.Name + "| IsAdmin:" + actualUser.IsAdmin());
                     syncManager.TryCreatePlayer(actualUser, new Vector3(132.35f, 2f, 118.99f),
-                    Quaternion.Euler(0, 90f, 0));
+                    new Vector3(0, 90f, 0));
                 }
             }
             else
