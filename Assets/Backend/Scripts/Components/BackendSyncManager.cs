@@ -4,9 +4,11 @@ using Frontend.Scripts;
 using GLShared.General.Interfaces;
 using GLShared.General.Models;
 using GLShared.Networking.Components;
+using GLShared.Networking.Extensions;
 using GLShared.Networking.Interfaces;
 using Sfs2X.Entities;
-using System.Collections;
+using Sfs2X.Entities.Data;
+using Sfs2X.Requests;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -23,9 +25,9 @@ namespace Backend.Scripts.Components
 
         private readonly Dictionary<string, INetworkEntity> connectedPlayers = new Dictionary<string, INetworkEntity>();
 
-        private int spanwedPlayersAmount = 0;
+        private int spawnedPlayersAmount = 0;
 
-        public int SpawnedPlayersAmount => spanwedPlayersAmount;
+        public int SpawnedPlayersAmount => spawnedPlayersAmount;
         public double CurrentServerTime => 0;
 
         public void Initialize()
@@ -37,6 +39,16 @@ namespace Backend.Scripts.Components
             if(!connectedPlayers.ContainsKey(user.Name))
             {
                 CreatePlayer(user, spawnPosition, spawnRotation);
+            }
+        }
+
+        public void SyncPosition(INetworkEntity entity)
+        {
+            if(entity.IsPlayer)
+            {
+                ISFSObject data = entity.CurrentNetworkTransform.ToISFSOBject();
+                ExtensionRequest request = new ExtensionRequest("inbattle.playerSync", data, null, false);
+                smartFox.Connection.Send(request);
             }
         }
 
@@ -53,7 +65,7 @@ namespace Backend.Scripts.Components
             });    
 
             connectedPlayers.Add(user.Name, playerEntity);
-            spanwedPlayersAmount++;
+            spawnedPlayersAmount++;
         }
 
         private PlayerProperties GetPlayerInitData(User user, string vehicleName, 

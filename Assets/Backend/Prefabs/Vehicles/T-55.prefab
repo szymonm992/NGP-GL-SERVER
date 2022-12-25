@@ -7771,6 +7771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 0
+  syncRate: 0.2
   isLocalPlayer: 0
 --- !u!114 &6212946819241629232
 MonoBehaviour:
@@ -7852,6 +7853,7 @@ MonoBehaviour:
   wheelsCollisionDetectionMask:
     serializedVersion: 2
     m_Bits: 2147483647
+  runPhysics: 1
   brakesForceApplyPoint: 1
   accelerationForceApplyPoint: 1
 --- !u!114 &8296658594306038754
