@@ -2,6 +2,7 @@ using Backend.Scripts.Components;
 using Backend.Scripts.Signals;
 using GLShared.General.Enums;
 using GLShared.General.Interfaces;
+using GLShared.General.Models;
 using GLShared.Networking.Components;
 using GLShared.Networking.Extensions;
 using Sfs2X;
@@ -59,6 +60,7 @@ namespace Backend.Scripts.Models
             connection.Connection.AddEventListener(SFSEvent.UDP_INIT, OnUDPInit);
             connection.Connection.AddEventListener(SFSEvent.USER_EXIT_ROOM, OnUserExitRoom);
             connection.Connection.AddEventListener(SFSEvent.USER_ENTER_ROOM, OnUserEnterRoom);
+            connection.Connection.AddEventListener(SFSEvent.EXTENSION_RESPONSE, OnExtensionResponse);
 
             ConfigData connectionConfigData = new ConfigData
             {
@@ -94,9 +96,10 @@ namespace Backend.Scripts.Models
                 string cmd = (string)evt.Params["cmd"];
                 ISFSObject objIn = (SFSObject)evt.Params["params"];
 
-                if (cmd == "inputs")
+                if (cmd == "playerInputs")
                 {
-
+                    PlayerInput input = objIn.ToPlayerInput();
+                    syncManager.SyncInputs(input);
                 }
             }
             catch (System.Exception exception)

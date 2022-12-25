@@ -21,11 +21,21 @@ namespace Backend.Scripts.Components
 
         public override void SyncPosition(INetworkEntity entity)
         {
+            base.SyncPosition(entity);
             if(entity.IsPlayer)
             {
                 ISFSObject data = entity.CurrentNetworkTransform.ToISFSOBject();
                 ExtensionRequest request = new ExtensionRequest("inbattle.playerSync", data, null, false);
                 smartFox.Connection.Send(request);
+            }
+        }
+
+        public override void SyncInputs(PlayerInput input)
+        {
+            base.SyncInputs(input);
+            if(connectedPlayers.ContainsKey(input.Username))
+            {
+                connectedPlayers[input.Username].InputProvider.SetInput(input);
             }
         }
 
