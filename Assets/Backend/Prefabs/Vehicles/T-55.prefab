@@ -7609,6 +7609,7 @@ GameObject:
   - component: {fileID: 7744036414676849148}
   - component: {fileID: 6212946819241629232}
   - component: {fileID: 8296658594306038754}
+  - component: {fileID: 3762301774592853768}
   m_Layer: 0
   m_Name: T-55
   m_TagString: Untagged
@@ -7716,6 +7717,7 @@ MonoBehaviour:
   - {fileID: 7744036414676849148}
   - {fileID: 6212946819241629232}
   - {fileID: 8296658594306038754}
+  - {fileID: 3762301774592853768}
   _identifier: 
   _useSceneContext: 0
   _context: {fileID: 0}
@@ -7869,6 +7871,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3ba5cbe8485c54409421cd1fcd7eb27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3762301774592853768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6364528611701590919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 958b5d3c042f13a41976032c35246b29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  steerForce: 5
 --- !u!1 &6408284720671623042
 GameObject:
   m_ObjectHideFlags: 0

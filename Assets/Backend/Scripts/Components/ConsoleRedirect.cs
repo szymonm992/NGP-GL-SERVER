@@ -27,6 +27,7 @@ namespace Backend.Scripts.Components
         {
             bool isCritical = (type == LogType.Error || type == LogType.Exception);
             string newLog = "\n\n <b><color=black>["+type+"]</color></b> <color=" + (isCritical ? "red" : "white")+ ">"+ logString + "</color>";
+            newLog += "\n" + stackTrace;
             currentOutput += newLog;
             consoleOutputText.text = currentOutput;
         }
