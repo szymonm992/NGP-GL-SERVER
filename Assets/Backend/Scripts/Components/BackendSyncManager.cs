@@ -24,8 +24,9 @@ namespace Backend.Scripts.Components
             base.SyncPosition(entity);
             if(entity.IsPlayer)
             {
+                var room = smartFox.Connection.LastJoinedRoom;
                 ISFSObject data = entity.CurrentNetworkTransform.ToISFSOBject();
-                ExtensionRequest request = new ExtensionRequest("inbattle.playerSync", data, null, false);
+                ExtensionRequest request = new ExtensionRequest("inbattle.playerSync", data, room, false);
                 smartFox.Connection.Send(request);
             }
         }

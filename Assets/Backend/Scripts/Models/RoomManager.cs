@@ -22,7 +22,7 @@ namespace Backend.Scripts.Models
     public class RoomManager : IInitializable, ITickable
     {
         [Inject] private readonly SignalBus signalBus;
-        [Inject] private readonly SmartFoxConnection connection;
+        [Inject] private readonly SmartFoxConnection smartFox;
         [Inject] private readonly IBattleManager battleManager;
         [Inject] private readonly ISyncManager syncManager;
 
@@ -46,21 +46,21 @@ namespace Backend.Scripts.Models
 
         private void ConnectToServerGateway()
         {
-            connection.Connection = new SmartFox()
+            smartFox.Connection = new SmartFox()
             {
                 ThreadSafeMode = true,
             };
 
-            connection.Connection.AddEventListener(SFSEvent.CONNECTION, OnConnection);
-            connection.Connection.AddEventListener(SFSEvent.CONNECTION_LOST, OnConnectionLost);
-            connection.Connection.AddEventListener(SFSEvent.LOGIN, OnLogin);
-            connection.Connection.AddEventListener(SFSEvent.LOGIN_ERROR, OnLoginError);
-            connection.Connection.AddEventListener(SFSEvent.ROOM_JOIN_ERROR, OnRoomJoinError);
-            connection.Connection.AddEventListener(SFSEvent.ROOM_JOIN, OnRoomJoin);
-            connection.Connection.AddEventListener(SFSEvent.UDP_INIT, OnUDPInit);
-            connection.Connection.AddEventListener(SFSEvent.USER_EXIT_ROOM, OnUserExitRoom);
-            connection.Connection.AddEventListener(SFSEvent.USER_ENTER_ROOM, OnUserEnterRoom);
-            connection.Connection.AddEventListener(SFSEvent.EXTENSION_RESPONSE, OnExtensionResponse);
+            smartFox.Connection.AddEventListener(SFSEvent.CONNECTION, OnConnection);
+            smartFox.Connection.AddEventListener(SFSEvent.CONNECTION_LOST, OnConnectionLost);
+            smartFox.Connection.AddEventListener(SFSEvent.LOGIN, OnLogin);
+            smartFox.Connection.AddEventListener(SFSEvent.LOGIN_ERROR, OnLoginError);
+            smartFox.Connection.AddEventListener(SFSEvent.ROOM_JOIN_ERROR, OnRoomJoinError);
+            smartFox.Connection.AddEventListener(SFSEvent.ROOM_JOIN, OnRoomJoin);
+            smartFox.Connection.AddEventListener(SFSEvent.UDP_INIT, OnUDPInit);
+            smartFox.Connection.AddEventListener(SFSEvent.USER_EXIT_ROOM, OnUserExitRoom);
+            smartFox.Connection.AddEventListener(SFSEvent.USER_ENTER_ROOM, OnUserEnterRoom);
+            smartFox.Connection.AddEventListener(SFSEvent.EXTENSION_RESPONSE, OnExtensionResponse);
 
             ConfigData connectionConfigData = new ConfigData
             {
@@ -71,22 +71,24 @@ namespace Backend.Scripts.Models
                 UdpPort = 9933,
             };
 
-            connection.Connection.Connect(connectionConfigData);
+            smartFox.Connection.Connect(connectionConfigData);
         }
 
         private void OnGameCountdownUpdate(SyncSignals.OnGameCountdownUpdate OnGameCountdownUpdate)
         {
+            var room = smartFox.Connection.LastJoinedRoom;
             ISFSObject data = new SFSObject();
             data.PutInt("currentCountdownValue", OnGameCountdownUpdate.CurrentCountdownValue);
-            ExtensionRequest request = new ExtensionRequest("inbattle.gameStartCountdown", data, null, false);
-            connection.Connection.Send(request);
+            ExtensionRequest request = new ExtensionRequest("inbattle.gameStartCountdown", data, room, false);
+            smartFox.Connection.Send(request);
         }
 
         private void OnPlayerSpawned(SyncSignals.OnPlayerSpawned OnPlayerSpawned)
         {
+            var room = smartFox.Connection.LastJoinedRoom;
             ISFSObject data = OnPlayerSpawned.PlayerProperties.ToISFSOBject();
-            ExtensionRequest request = new ExtensionRequest("inbattle.playerSpawned", data, null, false);
-            connection.Connection.Send(request);
+            ExtensionRequest request = new ExtensionRequest("inbattle.playerSpawned", data, room, false);
+            smartFox.Connection.Send(request);
         }
 
         private void OnExtensionResponse(BaseEvent evt)
@@ -125,8 +127,8 @@ namespace Backend.Scripts.Models
         {
             if ((bool)evt.Params["success"])
             {
-                Debug.Log("[SERVERAPP DEBUG] UDP initialized successfully: " + connection.Connection.UdpAvailable
-                    + "|" + connection.Connection.UdpInited);
+                Debug.Log("[SERVERAPP DEBUG] UDP initialized successfully: " + smartFox.Connection.UdpAvailable
+                    + "|" + smartFox.Connection.UdpInited);
             }
             else
             {
@@ -138,27 +140,28 @@ namespace Backend.Scripts.Models
         {
             ISFSObject data = new SFSObject();
             SendRoomJoinRequest("adminJoinRoom", data);
-            connection.Connection.InitUDP();
+            smartFox.Connection.InitUDP();
         }
 
         private void SendCurrentGameState(int gameStateIndex)
         {
+            var room = smartFox.Connection.LastJoinedRoom;
             ISFSObject data = new SFSObject();
             data.PutInt("currentGameStage", gameStateIndex);
-            ExtensionRequest request = new ExtensionRequest("inbattle.gameStage", data, null, false);
-            connection.Connection.Send(request);
+            ExtensionRequest request = new ExtensionRequest("inbattle.sendGameStage", data, room, false);
+            smartFox.Connection.Send(request);
         }
 
         private void SendRoomJoinRequest(string cmd, ISFSObject data)
         {
-            Room room = connection.Connection.LastJoinedRoom;
+            Room room = smartFox.Connection.LastJoinedRoom;
             ExtensionRequest request = new ExtensionRequest(cmd, data, room, false);
-            connection.Connection.Send(request);
+            smartFox.Connection.Send(request);
         }
 
         private void OnRoomJoin(BaseEvent evt)
         {
-            currentRoom = connection.Connection.LastJoinedRoom;
+            currentRoom = smartFox.Connection.LastJoinedRoom;
 
             var userList = currentRoom.UserList.Where(u => !u.IsAdmin());
 
@@ -186,7 +189,7 @@ namespace Backend.Scripts.Models
         private void OnUserEnterRoom(BaseEvent evt)
         {
             SFSUser user = (SFSUser)evt.Params["user"];
-            if (user == connection.Connection.MySelf)
+            if (user == smartFox.Connection.MySelf)
             {
                 if (battleManager.CurrentBattleStage != BattleStage.Beginning)
                 {
@@ -222,14 +225,14 @@ namespace Backend.Scripts.Models
             string username = "$ADMIN$(" + System.DateTime.UtcNow.Millisecond.ToString() 
                 + "|" + (Random.Range(1, 99999).ToString() + ")").ToString();
 
-            connection.Connection.Send(new LoginRequest(username, ADMIN_USER_PWD, ZONE_NAME));
+            smartFox.Connection.Send(new LoginRequest(username, ADMIN_USER_PWD, ZONE_NAME));
         }
 
         public void Tick()
         {
-            if (connection.IsInitialized)
+            if (smartFox.IsInitialized)
             {
-                connection.Connection.ProcessEvents();
+                smartFox.Connection.ProcessEvents();
             }
         }
     }
