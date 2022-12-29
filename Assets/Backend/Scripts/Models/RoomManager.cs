@@ -171,12 +171,12 @@ namespace Backend.Scripts.Models
                 {
                     Debug.Log("[SERVERAPP DEBUG] Creating player " + actualUser.Name + "| IsAdmin:" + actualUser.IsAdmin());
 
-                    if(actualUser.ContainsVariable("team"))
+                    if (actualUser.ContainsVariable("team"))
                     {
                         Team team = (Team)System.Convert.ToInt32(actualUser.GetVariable("team").Value);
                         var freeSpawnPoint = mapManager.GetFreeSpawnPoint(team);
 
-                        if(freeSpawnPoint != null)
+                        if (freeSpawnPoint != null)
                         {
                             syncManager.TryCreatePlayer(actualUser, freeSpawnPoint.SpawnPosition, freeSpawnPoint.SpawnEulerAngles);
                             freeSpawnPoint.SetFree(false);
