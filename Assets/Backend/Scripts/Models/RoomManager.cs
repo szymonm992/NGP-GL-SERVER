@@ -25,6 +25,7 @@ namespace Backend.Scripts.Models
         [Inject] private readonly SmartFoxConnection smartFox;
         [Inject] private readonly IBattleManager battleManager;
         [Inject] private readonly ISyncManager syncManager;
+        [Inject] private readonly MapManager mapManager;
 
         private Room currentRoom;
 
@@ -162,7 +163,6 @@ namespace Backend.Scripts.Models
         private void OnRoomJoin(BaseEvent evt)
         {
             currentRoom = smartFox.Connection.LastJoinedRoom;
-
             var userList = currentRoom.UserList.Where(u => !u.IsAdmin());
 
             if (userList.Any())
@@ -170,8 +170,26 @@ namespace Backend.Scripts.Models
                 foreach (var actualUser in userList)
                 {
                     Debug.Log("[SERVERAPP DEBUG] Creating player " + actualUser.Name + "| IsAdmin:" + actualUser.IsAdmin());
-                    syncManager.TryCreatePlayer(actualUser, new Vector3(132.35f, 2f, 118.99f),
-                    new Vector3(0, 90f, 0));
+
+                    if(actualUser.ContainsVariable("team"))
+                    {
+                        Team team = (Team)System.Convert.ToInt32(actualUser.GetVariable("team").Value);
+                        var freeSpawnPoint = mapManager.GetFreeSpawnPoint(team);
+
+                        if(freeSpawnPoint != null)
+                        {
+                            syncManager.TryCreatePlayer(actualUser, freeSpawnPoint.SpawnPosition, freeSpawnPoint.SpawnEulerAngles);
+                            freeSpawnPoint.SetFree(false);
+                        }
+                        else
+                        {
+                            Debug.LogError("No empty spawn point has been found for team " + team.ToString());
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("Player does not contain a team variable!");
+                    }
                 }
             }
             else

@@ -1,3 +1,4 @@
+using Backend.Scripts.Components;
 using Backend.Scripts.Models;
 using Backend.Scripts.Signals;
 using Frontend.Scripts;
@@ -42,6 +43,7 @@ namespace Backend.Scripts
             Container.Bind<SmartFoxConnection>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.Bind<GameParameters>().FromInstance(gameParameters).AsSingle();
             Container.BindInterfacesAndSelfTo<RoomManager>().FromNew().AsSingle();
+            Container.BindInterfacesAndSelfTo<MapManager>().FromComponentInHierarchy().AsSingle();
         }
 
         private void InstallSignals()
