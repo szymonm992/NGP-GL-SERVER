@@ -43,7 +43,7 @@ namespace Backend.Scripts
             Container.Bind<SmartFoxConnection>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.Bind<GameParameters>().FromInstance(gameParameters).AsSingle();
             Container.BindInterfacesAndSelfTo<RoomManager>().FromNew().AsSingle();
-            Container.BindInterfacesAndSelfTo<SpottingManager>().FromNew().AsSingle();
+            Container.BindInterfacesAndSelfTo<DetectionManager>().FromNew().AsSingle();
             Container.BindInterfacesAndSelfTo<MapManager>().FromComponentInHierarchy().AsSingle();
         }
 
@@ -55,6 +55,7 @@ namespace Backend.Scripts
             Container.DeclareSignal<PlayerSignals.OnPlayerInitialized>();
             Container.DeclareSignal<PlayerSignals.OnPlayerSpawned>();
             Container.DeclareSignal<PlayerSignals.OnAllPlayersInputLockUpdate>();
+            Container.DeclareSignal<PlayerSignals.OnPlayerDetectionStatusUpdate>();
 
             //backend signals
             Container.DeclareSignal<SyncSignals.OnPlayerSpawned>();
