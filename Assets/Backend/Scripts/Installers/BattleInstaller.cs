@@ -43,6 +43,7 @@ namespace Backend.Scripts
             Container.Bind<SmartFoxConnection>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.Bind<GameParameters>().FromInstance(gameParameters).AsSingle();
             Container.BindInterfacesAndSelfTo<RoomManager>().FromNew().AsSingle();
+            Container.BindInterfacesAndSelfTo<SpottingManager>().FromNew().AsSingle();
             Container.BindInterfacesAndSelfTo<MapManager>().FromComponentInHierarchy().AsSingle();
         }
 
