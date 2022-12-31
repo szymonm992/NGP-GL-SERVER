@@ -254,7 +254,7 @@ namespace Backend.Scripts.Models
 
             if (inputProvider.RawVertical == 0 || isBrake)
             {
-                float multiplier = isBrake ? 0.2f : 0.5f;
+                float multiplier = isBrake ? 0.2f : 0.7f;
 
                 foreach (var wheel in allGroundedWheels)
                 {
