@@ -24,6 +24,7 @@ namespace Backend.Scripts.Components
         public float CombinedInput => AbsoluteHorizontal + AbsoluteHorizontal;
         public float SignedVertical => Vertical != 0 ? Mathf.Sign(Vertical) : 0f;
         public float SignedHorizontal => Horizontal != 0 ? Mathf.Sign(Horizontal): 0f;
+        public float RawVertical => currentInput.RawVertical;
         public float AbsoluteVertical => Mathf.Abs(Vertical);
         public float AbsoluteHorizontal => Mathf.Abs(Horizontal);
         public float LastVerticalInput => lastVertical;

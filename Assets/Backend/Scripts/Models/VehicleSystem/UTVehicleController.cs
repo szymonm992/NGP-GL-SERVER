@@ -167,7 +167,7 @@ namespace Backend.Scripts.Models
             if (inputProvider != null)
             {
                 isBrake = inputProvider.Brake;
-                inputY = inputProvider.Vertical;
+                inputY = inputProvider.RawVertical == 0 ? 0 : inputProvider.Vertical;
 
                 absoluteInputY = inputProvider.AbsoluteVertical;
                 absoluteInputX = inputProvider.AbsoluteHorizontal;
@@ -195,7 +195,7 @@ namespace Backend.Scripts.Models
 
         protected void Accelerate()
         {
-            if (absoluteInputY == 0 || isBrake)
+            if (inputProvider.RawVertical == 0 || isBrake)
             {
                 return;
             }
@@ -250,9 +250,9 @@ namespace Backend.Scripts.Models
                 return;
             }
 
-            currentLongitudalGrip = isBrake ? 1f : (absoluteInputY > 0 ? 0 : 0.5f);
+            currentLongitudalGrip = isBrake ? 1f : (inputProvider.RawVertical != 0 ? 0 : 0.2f);
 
-            if (absoluteInputY == 0 || isBrake)
+            if (inputProvider.RawVertical == 0 || isBrake)
             {
                 float multiplier = isBrake ? 0.2f : 0.5f;
 
