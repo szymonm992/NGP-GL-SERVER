@@ -783,7 +783,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: 646f83d68b678cb4cbcbdb138f0b76a8, type: 3}
+  m_Mesh: {fileID: 2534964839176971238, guid: 980bef308d2754e43b6fa86a191a912c, type: 3}
 --- !u!54 &3805542102507984059
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2785,7 +2785,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: 646f83d68b678cb4cbcbdb138f0b76a8, type: 3}
+  m_Mesh: {fileID: 2534964839176971238, guid: 980bef308d2754e43b6fa86a191a912c, type: 3}
 --- !u!54 &2462739390306084920
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3028,7 +3028,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: 646f83d68b678cb4cbcbdb138f0b76a8, type: 3}
+  m_Mesh: {fileID: 2534964839176971238, guid: 980bef308d2754e43b6fa86a191a912c, type: 3}
 --- !u!54 &3919066801235527482
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3125,7 +3125,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: 646f83d68b678cb4cbcbdb138f0b76a8, type: 3}
+  m_Mesh: {fileID: 2534964839176971238, guid: 980bef308d2754e43b6fa86a191a912c, type: 3}
 --- !u!54 &3107783398544420644
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4602,7 +4602,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: 646f83d68b678cb4cbcbdb138f0b76a8, type: 3}
+  m_Mesh: {fileID: 2534964839176971238, guid: 980bef308d2754e43b6fa86a191a912c, type: 3}
 --- !u!54 &4318750433181964951
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6215,7 +6215,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: 646f83d68b678cb4cbcbdb138f0b76a8, type: 3}
+  m_Mesh: {fileID: 2534964839176971238, guid: 980bef308d2754e43b6fa86a191a912c, type: 3}
 --- !u!54 &4460351002517054406
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7761,6 +7761,8 @@ MonoBehaviour:
   gunRotationSpeed: 33
   gunDepression: 5
   gunElevation: 15
+  stabilizeGun: 1
+  stabilizeTurret: 1
 --- !u!114 &7744036414676849148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10297,7 +10299,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: 646f83d68b678cb4cbcbdb138f0b76a8, type: 3}
+  m_Mesh: {fileID: 2534964839176971238, guid: 980bef308d2754e43b6fa86a191a912c, type: 3}
 --- !u!54 &6549894816452118772
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11052,7 +11054,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: 646f83d68b678cb4cbcbdb138f0b76a8, type: 3}
+  m_Mesh: {fileID: 2534964839176971238, guid: 980bef308d2754e43b6fa86a191a912c, type: 3}
 --- !u!54 &6299351382959404073
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11357,7 +11359,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: 646f83d68b678cb4cbcbdb138f0b76a8, type: 3}
+  m_Mesh: {fileID: 2534964839176971238, guid: 980bef308d2754e43b6fa86a191a912c, type: 3}
 --- !u!54 &4918560411332493976
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11454,7 +11456,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: 646f83d68b678cb4cbcbdb138f0b76a8, type: 3}
+  m_Mesh: {fileID: 2534964839176971238, guid: 980bef308d2754e43b6fa86a191a912c, type: 3}
 --- !u!54 &5008254678169235999
 Rigidbody:
   m_ObjectHideFlags: 0
