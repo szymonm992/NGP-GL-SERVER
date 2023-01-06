@@ -7776,7 +7776,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 0
-  syncRate: 0.02
+  syncRate: 0.01
   isSender: 1
   isLocalPlayer: 0
 --- !u!114 &6212946819241629232
