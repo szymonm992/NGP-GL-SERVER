@@ -16,7 +16,7 @@ namespace Backend.Scripts.Components
 
         public void Initialize()
         {
-            if(!spawnPoints.Any())
+            if (!spawnPoints.Any())
             {
                 Debug.LogError("Them ap does not have any spawn points set!");
             }
@@ -27,8 +27,7 @@ namespace Backend.Scripts.Components
             var sortedPoints = spawnPoints.Where(point => point.SpawnPointTeam == team && point.Isfree).ToArray();
             if (sortedPoints.Any())
             {
-                int index = Random.Range(0, sortedPoints.Length);
-                return sortedPoints[index];
+                return sortedPoints[Random.Range(0, sortedPoints.Length)];
             }
             return null;
         }

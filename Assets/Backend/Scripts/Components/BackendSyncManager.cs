@@ -18,11 +18,9 @@ namespace Backend.Scripts.Components
 {
     public class BackendSyncManager : SyncManagerBase
     {
-        [Inject] private readonly RoomManager roomManager;
-
         public override void SyncPosition(INetworkEntity entity)
         {
-            if(entity.IsPlayer)
+            if (entity.IsPlayer)
             {
                 base.SyncPosition(entity);
                 var room = smartFox.Connection.LastJoinedRoom;

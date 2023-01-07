@@ -3,6 +3,7 @@ using Backend.Scripts.Signals;
 using GLShared.General.Enums;
 using GLShared.General.Interfaces;
 using GLShared.General.Models;
+using GLShared.General.Signals;
 using GLShared.Networking.Components;
 using GLShared.Networking.Extensions;
 using Sfs2X;
@@ -37,6 +38,7 @@ namespace Backend.Scripts.Models
             signalBus.Subscribe<SyncSignals.OnGameStateChanged>(OnGameStateChanged);
             signalBus.Subscribe<SyncSignals.OnGameCountdownUpdate>(OnGameCountdownUpdate);
             signalBus.Subscribe<SyncSignals.OnPlayerSpawned>(OnPlayerSpawned);
+            signalBus.Subscribe<PlayerSignals.OnPlayerShot>(OnPlayerShot);
             ConnectToServerGateway();
         }
 
@@ -89,6 +91,14 @@ namespace Backend.Scripts.Models
             var room = smartFox.Connection.LastJoinedRoom;
             ISFSObject data = OnPlayerSpawned.PlayerProperties.ToISFSOBject();
             ExtensionRequest request = new ExtensionRequest("inbattle.playerSpawned", data, room, false);
+            smartFox.Connection.Send(request);
+        }
+
+        private void OnPlayerShot(PlayerSignals.OnPlayerShot OnPlayerShot)
+        {
+            var room = smartFox.Connection.LastJoinedRoom;
+            ISFSObject data = null;
+            ExtensionRequest request = new ExtensionRequest("inbattle.playerShot", data, room, false);
             smartFox.Connection.Send(request);
         }
 

@@ -629,7 +629,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d3e00cfa6938946b72d849b4495266, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HOST: 127.0.0.1
   PORT: 9933
 --- !u!114 &1181965787
 MonoBehaviour:

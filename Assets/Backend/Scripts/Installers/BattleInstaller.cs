@@ -56,6 +56,7 @@ namespace Backend.Scripts
             Container.DeclareSignal<PlayerSignals.OnPlayerSpawned>();
             Container.DeclareSignal<PlayerSignals.OnAllPlayersInputLockUpdate>();
             Container.DeclareSignal<PlayerSignals.OnPlayerDetectionStatusUpdate>();
+            Container.DeclareSignal<PlayerSignals.OnPlayerShot>();
 
             //backend signals
             Container.DeclareSignal<SyncSignals.OnPlayerSpawned>();
