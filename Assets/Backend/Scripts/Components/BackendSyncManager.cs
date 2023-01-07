@@ -11,6 +11,7 @@ using Sfs2X.Entities.Data;
 using Sfs2X.Requests;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
 using Zenject;
 
 namespace Backend.Scripts.Components
@@ -21,9 +22,9 @@ namespace Backend.Scripts.Components
 
         public override void SyncPosition(INetworkEntity entity)
         {
-            base.SyncPosition(entity);
             if(entity.IsPlayer)
             {
+                base.SyncPosition(entity);
                 var room = smartFox.Connection.LastJoinedRoom;
                 ISFSObject data = entity.CurrentNetworkTransform.ToISFSOBject();
                 ExtensionRequest request = new ExtensionRequest("inbattle.playerSync", data, room, false);
@@ -33,10 +34,18 @@ namespace Backend.Scripts.Components
 
         public override void SyncInputs(PlayerInput input)
         {
-            base.SyncInputs(input);
             if(connectedPlayers.ContainsKey(input.Username))
             {
+                base.SyncInputs(input);
                 connectedPlayers[input.Username].InputProvider.SetInput(input);
+            }
+        }
+
+        public override void SyncShell(IShellController shellController)
+        {
+            if (connectedPlayers.ContainsKey(shellController.OwnerUsername))
+            {
+                base.SyncShell(shellController);
             }
         }
 

@@ -28,6 +28,7 @@ namespace Backend.Scripts.Components
         public float AbsoluteVertical => Mathf.Abs(Vertical);
         public float AbsoluteHorizontal => Mathf.Abs(Horizontal);
         public float LastVerticalInput => lastVertical;
+
         public bool SnipingKey => false;
         public bool TurretLockKey => currentInput.TurretLockKey;
         public bool ShootingKey => currentInput.ShootingKey;
