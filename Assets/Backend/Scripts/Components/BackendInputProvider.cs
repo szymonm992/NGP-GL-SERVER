@@ -30,6 +30,7 @@ namespace Backend.Scripts.Components
         public float LastVerticalInput => lastVertical;
         public bool SnipingKey => false;
         public bool TurretLockKey => currentInput.TurretLockKey;
+        public bool ShootingKey => currentInput.ShootingKey;
         public bool LockPlayerInput => lockPlayerInput;
 
         public Vector3 CameraTargetingPosition => currentInput.CameraTargetingPosition;
