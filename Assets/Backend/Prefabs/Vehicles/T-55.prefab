@@ -7778,7 +7778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 0
-  syncRate: 0.01
+  syncRate: 0.015
   isSender: 1
   isLocalPlayer: 0
 --- !u!114 &6212946819241629232
@@ -7796,7 +7796,7 @@ MonoBehaviour:
   centerOfMass: {fileID: 827835342807614448}
   centerOfMassUngrounded: {fileID: 4157537771192790092}
   vehicleType: 2
-  maxSlopeAngle: 45
+  maxSlopeAngle: 35
   enginePowerCurve:
     serializedVersion: 2
     m_Curve:
