@@ -124,12 +124,6 @@ namespace Backend.Scripts.Models
                     PlayerProperties = playerEntity.Properties,
                     InputProvider = inputProvider,
                     VehicleStats = vehicleStats,
-                    TurretRotationSpeed = hasTurret ? vehicleStats.TurretRotationSpeed : 0,
-                    GunRotationSpeed = hasTurret ? vehicleStats.GunRotationSpeed : 0,
-                    GunDepression = vehicleStats.GunDepression,
-                    GunElevation = vehicleStats.GunElevation,
-                    StabilizeGun = vehicleStats.StabilizeGun,
-                    StabilizeTurret = vehicleStats.StabilizeTurret,
                 });
             }
         }
