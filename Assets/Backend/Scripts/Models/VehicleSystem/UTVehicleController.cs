@@ -114,21 +114,26 @@ namespace Backend.Scripts.Models
 
         }
 
-        private void OnPlayerSpawned()
+        private void OnPlayerSpawned(PlayerSignals.OnPlayerSpawned OnPlayerSpawned)
         {
-            signalBus.Fire(new PlayerSignals.OnPlayerInitialized()
+            if (OnPlayerSpawned.PlayerProperties.User.Name == playerEntity.Username)
             {
-                PlayerProperties = playerEntity.Properties,
-                InputProvider = inputProvider,
-                VehicleStats = vehicleStats,
-                TurretRotationSpeed = hasTurret ? vehicleStats.TurretRotationSpeed : 0,
-                GunRotationSpeed = hasTurret ? vehicleStats.GunRotationSpeed : 0,
-                GunDepression = vehicleStats.GunDepression,
-                GunElevation = vehicleStats.GunElevation,
-                StabilizeGun = vehicleStats.StabilizeGun,
-                StabilizeTurret = vehicleStats.StabilizeTurret,
-            });
+                gameObject.name = "Player '" + playerEntity.Username + "'";
+                signalBus.Fire(new PlayerSignals.OnPlayerInitialized()
+                {
+                    PlayerProperties = playerEntity.Properties,
+                    InputProvider = inputProvider,
+                    VehicleStats = vehicleStats,
+                    TurretRotationSpeed = hasTurret ? vehicleStats.TurretRotationSpeed : 0,
+                    GunRotationSpeed = hasTurret ? vehicleStats.GunRotationSpeed : 0,
+                    GunDepression = vehicleStats.GunDepression,
+                    GunElevation = vehicleStats.GunElevation,
+                    StabilizeGun = vehicleStats.StabilizeGun,
+                    StabilizeTurret = vehicleStats.StabilizeTurret,
+                });
+            }
         }
+
         public virtual void SetupRigidbody()
         {
             rig.mass = vehicleStats.Mass;
