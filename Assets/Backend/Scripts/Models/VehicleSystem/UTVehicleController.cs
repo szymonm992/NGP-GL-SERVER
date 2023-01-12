@@ -27,7 +27,6 @@ namespace Backend.Scripts.Models
 
 
         [SerializeField] protected Transform centerOfMass;
-        [SerializeField] protected Transform centerOfMassUngrounded;
         [SerializeField] protected VehicleType vehicleType = VehicleType.Car;
         [SerializeField] protected float maxSlopeAngle = 45f;
         [SerializeField] protected AnimationCurve enginePowerCurve;
@@ -66,8 +65,6 @@ namespace Backend.Scripts.Models
         protected float horizontalAngle;
         protected bool isUpsideDown = false;
         protected Vector3 wheelVelocityLocal;
-
-        private GameObject currentComTrans;
         #endregion 
 
         protected IEnumerable<IPhysicsWheel> allGroundedWheels;
@@ -83,6 +80,7 @@ namespace Backend.Scripts.Models
         public float SignedInputY => signedInputY;
         public float MaxForwardSpeed => maxForwardSpeed;
         public float MaxBackwardsSpeed => maxBackwardsSpeed;
+        public float HorizontalAngle => horizontalAngle;
         public bool DoesGravityDamping => doesGravityDamping;
         public bool IsUpsideDown => isUpsideDown;
         public bool HasTurret => hasTurret;
@@ -118,7 +116,7 @@ namespace Backend.Scripts.Models
         {
             if (OnPlayerSpawned.PlayerProperties.User.Name == playerEntity.Username)
             {
-                gameObject.name = "Player '" + playerEntity.Username + "'";
+                gameObject.name = "(" + OnPlayerSpawned.PlayerProperties.PlayerVehicleName + ")Player '" + playerEntity.Username + "'";
                 signalBus.Fire(new PlayerSignals.OnPlayerInitialized()
                 {
                     PlayerProperties = playerEntity.Properties,
@@ -136,7 +134,7 @@ namespace Backend.Scripts.Models
 
             if (centerOfMass != null)
             {
-                SetCenterOfMassToPoint(centerOfMass);
+                rig.centerOfMass = centerOfMass.localPosition;
             }
         }
 
@@ -146,20 +144,10 @@ namespace Backend.Scripts.Models
             horizontalAngle = 90f - Vector3.Angle(Vector3.up, transform.right);
         }
 
-        protected void SetCenterOfMassToPoint(Transform comPoint)
-        {
-            if (!currentComTrans || currentComTrans.gameObject != comPoint.gameObject)
-            {
-                currentComTrans = comPoint.gameObject;
-                rig.centerOfMass = comPoint.localPosition;
-            }
-        }
-
         protected virtual void FixedUpdate()
         {
             CalculateVehicleAngles();
             CalculateVehicleMaxVelocity();
-            SetCenterOfMassToPoint(horizontalAngle >= 50f ? centerOfMassUngrounded : centerOfMass);
 
             allGroundedWheels = GetGroundedWheelsInAllAxles().ToArray();
             isUpsideDown = CheckUpsideDown();
