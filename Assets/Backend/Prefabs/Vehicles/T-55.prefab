@@ -7794,10 +7794,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerOfMass: {fileID: 827835342807614448}
-  centerOfMassUngrounded: {fileID: 4157537771192790092}
   vehicleType: 2
   maxSlopeAngle: 35
-  enginePowerCurve:
+  forwardPowerCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -7857,6 +7856,57 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  backwardPowerCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 80000
+      inSlope: -985.7143
+      outSlope: -3200
+      tangentMode: 65
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 10
+      value: 48000
+      inSlope: -3200
+      outSlope: -4800
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 15
+      value: 24000
+      inSlope: -4800
+      outSlope: -900
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 25
+      value: 15000
+      inSlope: -900
+      outSlope: -2600
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 30
+      value: 2000
+      inSlope: -2600
+      outSlope: -985.7143
+      tangentMode: 5
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   doesGravityDamping: 0
   wheelsCollisionDetectionMask:
     serializedVersion: 2
@@ -7901,6 +7951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0651e9ed5257ebe45bc2d1e6486cf0a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reloadTime: 5
 --- !u!1 &6408284720671623042
 GameObject:
   m_ObjectHideFlags: 0

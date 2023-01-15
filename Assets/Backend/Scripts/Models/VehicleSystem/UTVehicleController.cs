@@ -16,6 +16,9 @@ namespace Backend.Scripts.Models
 {
     public abstract class UTVehicleController : MonoBehaviour, IVehicleController
     {
+        private const float BRAKE_FORCE_OPPOSITE_INPUT_AND_FORCE_MULTIPLIER = 0.1f;
+        private const float BRAKE_FORCE_NO_INPUTS_MULTIPLIER = 0.25f;
+
         [Inject(Id = "mainRig")] protected Rigidbody rig;
         [Inject] protected readonly SignalBus signalBus;
         [Inject] protected readonly IEnumerable<IVehicleAxle> allAxles;
@@ -29,7 +32,8 @@ namespace Backend.Scripts.Models
         [SerializeField] protected Transform centerOfMass;
         [SerializeField] protected VehicleType vehicleType = VehicleType.Car;
         [SerializeField] protected float maxSlopeAngle = 45f;
-        [SerializeField] protected AnimationCurve enginePowerCurve;
+        [SerializeField] protected AnimationCurve forwardPowerCurve;
+        [SerializeField] protected AnimationCurve backwardPowerCurve;
         [SerializeField] protected bool doesGravityDamping = true;
         [SerializeField] protected LayerMask wheelsCollisionDetectionMask;
         [SerializeField] protected bool runPhysics = true;
@@ -63,7 +67,10 @@ namespace Backend.Scripts.Models
         protected float turnForce;
         protected float verticalAngle;
         protected float horizontalAngle;
+
         protected bool isUpsideDown = false;
+        protected bool isMovingInDirectionOfInput = true;
+
         protected Vector3 wheelVelocityLocal;
         #endregion 
 
@@ -99,8 +106,8 @@ namespace Backend.Scripts.Models
         {
             SetupRigidbody();
 
-            maxForwardSpeed = enginePowerCurve.keys[enginePowerCurve.keys.Length - 1].time;
-            maxBackwardsSpeed = maxForwardSpeed / 2f;
+            maxForwardSpeed = forwardPowerCurve.keys[^1].time;
+            maxBackwardsSpeed = backwardPowerCurve.keys[^1].time;
 
             hasAnyWheels = allAxles.Any() && allAxles.Where(axle => axle.HasAnyWheelPair && axle.HasAnyWheel).Any();
             allWheels = GetAllWheelsInAllAxles().ToArray();
@@ -151,6 +158,7 @@ namespace Backend.Scripts.Models
 
             allGroundedWheels = GetGroundedWheelsInAllAxles().ToArray();
             isUpsideDown = CheckUpsideDown();
+            isMovingInDirectionOfInput = Mathf.Sign(transform.InverseTransformDirection(rig.velocity).z) == Mathf.Sign(inputProvider.Vertical);
         }
 
         protected virtual void Update()
@@ -188,7 +196,14 @@ namespace Backend.Scripts.Models
 
         protected void EvaluateDriveParams()
         {
-            currentDriveForce = enginePowerCurve.Evaluate(currentSpeed);
+            if (inputProvider.RawVertical == 0f)
+            {
+                currentDriveForce = 0f;
+            }
+            else
+            {
+                currentDriveForce = inputProvider.RawVertical > 0f ? forwardPowerCurve.Evaluate(currentSpeed) : backwardPowerCurve.Evaluate(currentSpeed);
+            }
         }
 
         protected void Accelerate()
@@ -248,11 +263,13 @@ namespace Backend.Scripts.Models
                 return;
             }
 
-            currentLongitudalGrip = isBrake ? 1f : (inputProvider.RawVertical != 0 ? 0 : 0.2f);
+            currentLongitudalGrip = isBrake ? 1f : (inputProvider.RawVertical != 0f ?
+               (isMovingInDirectionOfInput ? 0f : BRAKE_FORCE_OPPOSITE_INPUT_AND_FORCE_MULTIPLIER)
+               : BRAKE_FORCE_NO_INPUTS_MULTIPLIER);
 
-            if (inputProvider.RawVertical == 0 || isBrake)
+            if (inputProvider.RawVertical == 0 || isBrake || !isMovingInDirectionOfInput)
             {
-                float multiplier = isBrake ? 0.2f : 0.7f;
+                float forceMultiplier = isBrake ? 0.2f : 0.7f;
 
                 foreach (var wheel in allGroundedWheels)
                 {
@@ -267,7 +284,7 @@ namespace Backend.Scripts.Models
                         float desiredVelChange = -steeringVel * currentLongitudalGrip;
                         float desiredAccel = desiredVelChange / Time.fixedDeltaTime;
 
-                        rig.AddForceAtPosition(desiredAccel * (wheel.TireMass * multiplier) * forwardDir, brakesPoint);
+                        rig.AddForceAtPosition(desiredAccel * (wheel.TireMass * forceMultiplier) * forwardDir, brakesPoint);
                     }
 
                 }
