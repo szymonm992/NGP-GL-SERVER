@@ -226,7 +226,7 @@ namespace Backend.Scripts.Models
 
                     foreach (var wheel in groundedWheels)
                     {
-                        if (wheel is UTWheel)
+                        if (!wheel.IsIdler)
                         {
                             if (wheel.HitInfo.NormalAndUpAngle <= gameParameters.MaxWheelDetectionAngle)
                             {
@@ -273,7 +273,7 @@ namespace Backend.Scripts.Models
 
                 foreach (var wheel in allGroundedWheels)
                 {
-                    if (wheel is UTWheel)
+                    if (!wheel.IsIdler)
                     {
                         Vector3 brakesPoint = wheel.ReturnWheelPoint(brakesForceApplyPoint);
 
