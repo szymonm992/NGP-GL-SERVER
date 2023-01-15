@@ -248,7 +248,7 @@ namespace Backend.Scripts.Models
                             forwardForce = inputY * currentDriveForce * 3f;
                             turnForce = wheelVelocityLocal.x * currentDriveForce;
 
-                            rig.AddForceAtPosition((forwardForce * wheel.Transform.up), wheel.Transform.position);
+                            rig.AddForceAtPosition((forwardForce * (wheel.Transform.forward + wheel.Transform.up * 2f)), wheel.Transform.position);
                             rig.AddForceAtPosition((turnForce * -wheel.Transform.right), wheel.UpperConstraintPoint);
                         }
                     }
