@@ -252,7 +252,7 @@ namespace Backend.Scripts.Models
                             forwardForce = inputY * maxEngineForwardPower * IDLER_WHEEL_BUMP_MULTIPLIER;
                             turnForce = wheelVelocityLocal.x * currentDriveForce;
 
-                            rig.AddForceAtPosition((forwardForce * (wheel.Transform.up - wheel.Transform.forward)), wheel.Transform.position);
+                            rig.AddForceAtPosition((forwardForce * (wheel.Transform.up - wheel.Transform.forward)), wheel.UpperConstraintPoint);
                             rig.AddForceAtPosition((turnForce * -wheel.Transform.right), wheel.UpperConstraintPoint);
                         }
                     }
