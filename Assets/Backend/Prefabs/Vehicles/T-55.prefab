@@ -4405,6 +4405,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   idlerWheelOffset: {x: 0, y: 0.1, z: 0.2}
+  idlerSite: 0
   debugSettings:
     drawGizmos: 1
     drawOnDisable: 0
@@ -4461,6 +4462,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   idlerWheelOffset: {x: 0, y: 0.1, z: 0.2}
+  idlerSite: 0
   debugSettings:
     drawGizmos: 1
     drawOnDisable: 0
@@ -10034,6 +10036,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   idlerWheelOffset: {x: 0, y: 0, z: -0.2}
+  idlerSite: 1
   debugSettings:
     drawGizmos: 1
     drawOnDisable: 0
@@ -10121,6 +10124,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   idlerWheelOffset: {x: 0, y: 0, z: -0.2}
+  idlerSite: 1
   debugSettings:
     drawGizmos: 1
     drawOnDisable: 0
