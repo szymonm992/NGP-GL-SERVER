@@ -30,7 +30,7 @@ namespace Backend.Scripts.Components
 
         protected override void CustomGravityLogic()
         {
-            if (!allGroundedWheels.Where(wheel => wheel is UTWheel).Any())
+            if (!allGroundedWheels.Where(wheel => !wheel.IsIdler).Any())
             {
                 rig.AddForce(Physics.gravity, ForceMode.Acceleration);
             }

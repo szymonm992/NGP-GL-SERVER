@@ -11,7 +11,7 @@ namespace Backend.Scripts.Components
     {
         [Inject(Id = "consoleOutputCaption")] private readonly TextMeshProUGUI consoleOutputText;
 
-        private string currentOutput = "Copnsole output:";
+        private string currentOutput = "Console output:";
 
         public void Initialize()
         {
