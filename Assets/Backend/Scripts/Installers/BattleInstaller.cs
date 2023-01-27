@@ -9,6 +9,7 @@ using GLShared.General.Signals;
 using GLShared.Networking.Components;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Zenject;
 
@@ -19,6 +20,7 @@ namespace Backend.Scripts
         [SerializeField] private RandomBattleParameters randomBattleParameters;
         [SerializeField] private VehiclesDatabase vehiclesDatabase;
         [SerializeField] private GameParameters gameParameters;
+        [SerializeField] private TextMeshProUGUI battleTimer;
 
         public override void InstallBindings()
         {
@@ -37,6 +39,7 @@ namespace Backend.Scripts
             //=======================
 
             Container.BindInterfacesAndSelfTo<RandomBattleParameters>().FromInstance(randomBattleParameters).AsSingle();
+            Container.Bind<TextMeshProUGUI>().WithId("battleTimer").FromInstance(battleTimer).AsSingle();
         }
         private void InstallNetworkComponents()
         {
@@ -57,6 +60,7 @@ namespace Backend.Scripts
             Container.DeclareSignal<PlayerSignals.OnAllPlayersInputLockUpdate>();
             Container.DeclareSignal<PlayerSignals.OnPlayerDetectionStatusUpdate>();
             Container.DeclareSignal<PlayerSignals.OnPlayerShot>();
+            Container.DeclareSignal<PlayerSignals.OnBattleTimeChanged>();
 
             //backend signals
             Container.DeclareSignal<SyncSignals.OnPlayerSpawned>();

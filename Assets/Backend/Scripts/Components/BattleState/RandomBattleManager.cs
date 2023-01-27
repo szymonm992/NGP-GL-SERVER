@@ -6,7 +6,7 @@ using GLShared.General.Enums;
 using GLShared.General.Interfaces;
 using GLShared.General.ScriptableObjects;
 using GLShared.General.Signals;
-
+using TMPro;
 using UnityEngine;
 using Zenject;
 
@@ -16,20 +16,24 @@ namespace Backend.Scripts.Components
     {
         [Inject] private readonly ISyncManager syncManager;
         [Inject] private readonly RandomBattleParameters battleParameters;
+        [Inject (Id = "battleTimer")] private readonly TextMeshProUGUI countdownText;
 
         [SerializeField] private bool allPlayersConnectionsEstablished = true;
 
         private BattleCountdownStage countdownState;
-        private bool trackCountdown;
+        private BattleInProgressStage inProgressState;
+
+        private bool trackCountdown = false;
         private BattleStage currentBattleStage;
 
         public BattleStage CurrentBattleStage => currentBattleStage;
 
         public override void OnStateMachineInitialized(OnStateMachineInitialized<BattleStage> OnStateMachineInitialized)
         {
-            countdownState = (BattleCountdownStage)stateMachine.GetState(BattleStage.Countdown);
-
             base.OnStateMachineInitialized(OnStateMachineInitialized);
+
+            countdownState = (BattleCountdownStage)stateMachine.GetState(BattleStage.Countdown);
+            inProgressState = (BattleInProgressStage)stateMachine.GetState(BattleStage.InProgress);
 
             stateMachine.AddTransition(BattleStage.Beginning, BattleStage.Countdown
                 , () => battleParameters.AreAllPlayersSpawned.Invoke(syncManager.SpawnedPlayersAmount)
@@ -47,7 +51,7 @@ namespace Backend.Scripts.Components
             currentBattleStage = newState;
 
             var lockPlayerInput = newState != BattleStage.InProgress;
-            trackCountdown = newState == BattleStage.Countdown;
+            trackCountdown = (newState == BattleStage.Countdown || newState == BattleStage.InProgress);
 
             signalBus.Fire(new PlayerSignals.OnAllPlayersInputLockUpdate()
             {
@@ -64,19 +68,35 @@ namespace Backend.Scripts.Components
 
         protected override void Update()
         {
-            if(trackCountdown)
+            if (trackCountdown)
             {
-                var currentTimer = countdownState.CurrentIntegerTimer;
-
-                if(countdownState.PreviousIntegerTimer != currentTimer)
+                if(currentBattleStage == BattleStage.Countdown)
                 {
-                    signalBus.Fire(new SyncSignals.OnGameCountdownUpdate()
+                    var currentTimer = countdownState.CurrentIntegerTimer;
+
+                    if (countdownState.PreviousIntegerTimer != currentTimer)
                     {
-                        CurrentCountdownValue = currentTimer,
-                    });
+                        signalBus.Fire(new SyncSignals.OnGameCountdownUpdate()
+                        {
+                            CurrentCountdownValue = currentTimer,
+                        });
+                    }
+                }
+                else if(currentBattleStage == BattleStage.InProgress)
+                {
+                    if (inProgressState.HaveSecondsChanged)
+                    {
+                        signalBus.Fire(new PlayerSignals.OnBattleTimeChanged()
+                        {
+                            CurrentMinutesLeft = inProgressState.MinutesLeft,
+                            CurrentSecondsLeft = inProgressState.SecondsLeft,
+                        });
+
+                        var seconds = inProgressState.SecondsLeft.ToString();
+                        countdownText.text = $"{inProgressState.MinutesLeft}:{seconds}";
+                    }
                 }
             }
         }
-
     }
 }

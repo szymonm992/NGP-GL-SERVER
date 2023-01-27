@@ -38,7 +38,9 @@ namespace Backend.Scripts.Models
             signalBus.Subscribe<SyncSignals.OnGameStateChanged>(OnGameStateChanged);
             signalBus.Subscribe<SyncSignals.OnGameCountdownUpdate>(OnGameCountdownUpdate);
             signalBus.Subscribe<SyncSignals.OnPlayerSpawned>(OnPlayerSpawned);
+            signalBus.Subscribe<PlayerSignals.OnBattleTimeChanged>(OnBattleTimeChanged);
             signalBus.Subscribe<PlayerSignals.OnPlayerShot>(OnPlayerShot);
+
             ConnectToServerGateway();
         }
 
@@ -80,25 +82,43 @@ namespace Backend.Scripts.Models
         private void OnGameCountdownUpdate(SyncSignals.OnGameCountdownUpdate OnGameCountdownUpdate)
         {
             var room = smartFox.Connection.LastJoinedRoom;
+
             ISFSObject data = new SFSObject();
             data.PutInt("currentCountdownValue", OnGameCountdownUpdate.CurrentCountdownValue);
             ExtensionRequest request = new ExtensionRequest("inbattle.gameStartCountdown", data, room, false);
+
             smartFox.Connection.Send(request);
         }
 
         private void OnPlayerSpawned(SyncSignals.OnPlayerSpawned OnPlayerSpawned)
         {
             var room = smartFox.Connection.LastJoinedRoom;
+
             ISFSObject data = OnPlayerSpawned.PlayerProperties.ToISFSOBject();
             ExtensionRequest request = new ExtensionRequest("inbattle.playerSpawned", data, room, false);
+
             smartFox.Connection.Send(request);
         }
 
         private void OnPlayerShot(PlayerSignals.OnPlayerShot OnPlayerShot)
         {
             var room = smartFox.Connection.LastJoinedRoom;
+
             ISFSObject data = null;
             ExtensionRequest request = new ExtensionRequest("inbattle.playerShot", data, room, false);
+
+            smartFox.Connection.Send(request);
+        }
+
+        private void OnBattleTimeChanged(PlayerSignals.OnBattleTimeChanged OnBattleTimeChanged)
+        {
+            var room = smartFox.Connection.LastJoinedRoom;
+
+            ISFSObject data = new SFSObject();
+            data.PutInt("minutesLeft", OnBattleTimeChanged.CurrentMinutesLeft);
+            data.PutInt("secondsLeft", OnBattleTimeChanged.CurrentSecondsLeft);
+            ExtensionRequest request = new ExtensionRequest("inbattle.battleTimer", data, room, false);
+
             smartFox.Connection.Send(request);
         }
 
@@ -122,51 +142,23 @@ namespace Backend.Scripts.Models
             }
         }
 
-        private void OnConnection(BaseEvent evt)
-        {
-            if ((bool)evt.Params["success"])
-            {
-                TryLogin();
-            }
-            else
-            {
-                Debug.Log("[SERVERAPP DEBUG] Failed connecting to server application!");
-            }
-        }
-
-        private void OnUDPInit(BaseEvent evt)
-        {
-            if ((bool)evt.Params["success"])
-            {
-                Debug.Log("[SERVERAPP DEBUG] UDP initialized successfully: " + smartFox.Connection.UdpAvailable
-                    + "|" + smartFox.Connection.UdpInited);
-            }
-            else
-            {
-                Debug.Log("[SERVERAPP DEBUG] Error with udp unit");
-            }
-        }
-
-        private void OnLogin(BaseEvent evt)
-        {
-            ISFSObject data = new SFSObject();
-            SendRoomJoinRequest("adminJoinRoom", data);
-            smartFox.Connection.InitUDP();
-        }
-
         private void SendCurrentGameState(int gameStateIndex)
         {
             var room = smartFox.Connection.LastJoinedRoom;
+
             ISFSObject data = new SFSObject();
             data.PutInt("currentGameStage", gameStateIndex);
             ExtensionRequest request = new ExtensionRequest("inbattle.sendGameStage", data, room, false);
+
             smartFox.Connection.Send(request);
         }
 
         private void SendRoomJoinRequest(string cmd, ISFSObject data)
         {
             Room room = smartFox.Connection.LastJoinedRoom;
+
             ExtensionRequest request = new ExtensionRequest(cmd, data, room, false);
+
             smartFox.Connection.Send(request);
         }
 
@@ -204,7 +196,7 @@ namespace Backend.Scripts.Models
             }
             else
             {
-                Debug.Log("Did not find any player ");
+                Debug.Log("Did not find any player!");
             }
         }
 
@@ -217,6 +209,7 @@ namespace Backend.Scripts.Models
         private void OnUserEnterRoom(BaseEvent evt)
         {
             SFSUser user = (SFSUser)evt.Params["user"];
+
             if (user == smartFox.Connection.MySelf)
             {
                 if (battleManager.CurrentBattleStage != BattleStage.Beginning)
@@ -234,6 +227,7 @@ namespace Backend.Scripts.Models
             {
                 Debug.Log("[SERVERAPP DEBUG] Connection was lost; reason is: " + reason);
             }
+
             Application.Quit();
         }
 
@@ -245,6 +239,40 @@ namespace Backend.Scripts.Models
         private void OnRoomJoinError(BaseEvent evt)
         {
             Debug.Log("[SERVERAPP DEBUG] Room join failed: " + (string)evt.Params["errorMessage"]);
+        }
+
+        private void OnConnection(BaseEvent evt)
+        {
+            if ((bool)evt.Params["success"])
+            {
+                TryLogin();
+            }
+            else
+            {
+                Debug.Log("[SERVERAPP DEBUG] Failed connecting to server application!");
+            }
+        }
+
+        private void OnUDPInit(BaseEvent evt)
+        {
+            if ((bool)evt.Params["success"])
+            {
+                Debug.Log("[SERVERAPP DEBUG] UDP initialized successfully: " + smartFox.Connection.UdpAvailable
+                    + "|" + smartFox.Connection.UdpInited);
+            }
+            else
+            {
+                Debug.Log("[SERVERAPP DEBUG] Error with udp unit");
+            }
+        }
+
+        private void OnLogin(BaseEvent evt)
+        {
+            ISFSObject data = new SFSObject();
+
+            SendRoomJoinRequest("adminJoinRoom", data);
+
+            smartFox.Connection.InitUDP();
         }
         #endregion
 
