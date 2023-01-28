@@ -85,7 +85,7 @@ namespace Backend.Scripts.Models
 
             ISFSObject data = new SFSObject();
             data.PutInt("currentCountdownValue", OnGameCountdownUpdate.CurrentCountdownValue);
-            ExtensionRequest request = new ExtensionRequest("inbattle.gameStartCountdown", data, room, false);
+            var request = new ExtensionRequest("inbattle.gameStartCountdown", data, room, false);
 
             smartFox.Connection.Send(request);
         }
@@ -95,7 +95,7 @@ namespace Backend.Scripts.Models
             var room = smartFox.Connection.LastJoinedRoom;
 
             ISFSObject data = OnPlayerSpawned.PlayerProperties.ToISFSOBject();
-            ExtensionRequest request = new ExtensionRequest("inbattle.playerSpawned", data, room, false);
+            var request = new ExtensionRequest("inbattle.playerSpawned", data, room, false);
 
             smartFox.Connection.Send(request);
         }
@@ -105,7 +105,7 @@ namespace Backend.Scripts.Models
             var room = smartFox.Connection.LastJoinedRoom;
 
             ISFSObject data = null;
-            ExtensionRequest request = new ExtensionRequest("inbattle.playerShot", data, room, false);
+            var request = new ExtensionRequest("inbattle.playerShot", data, room, false);
 
             smartFox.Connection.Send(request);
         }
@@ -117,7 +117,7 @@ namespace Backend.Scripts.Models
             ISFSObject data = new SFSObject();
             data.PutInt("minutesLeft", OnBattleTimeChanged.CurrentMinutesLeft);
             data.PutInt("secondsLeft", OnBattleTimeChanged.CurrentSecondsLeft);
-            ExtensionRequest request = new ExtensionRequest("inbattle.battleTimer", data, room, false);
+            var request = new ExtensionRequest("inbattle.battleTimer", data, room, false);
 
             smartFox.Connection.Send(request);
         }
@@ -148,7 +148,7 @@ namespace Backend.Scripts.Models
 
             ISFSObject data = new SFSObject();
             data.PutInt("currentGameStage", gameStateIndex);
-            ExtensionRequest request = new ExtensionRequest("inbattle.sendGameStage", data, room, false);
+            var request = new ExtensionRequest("inbattle.sendGameStage", data, room, false);
 
             smartFox.Connection.Send(request);
         }
@@ -157,7 +157,7 @@ namespace Backend.Scripts.Models
         {
             Room room = smartFox.Connection.LastJoinedRoom;
 
-            ExtensionRequest request = new ExtensionRequest(cmd, data, room, false);
+            var request = new ExtensionRequest(cmd, data, room, false);
 
             smartFox.Connection.Send(request);
         }

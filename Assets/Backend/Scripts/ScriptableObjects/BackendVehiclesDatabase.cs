@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Backend.Scripts.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "BackendVehiclesDatabase", menuName = "UT/Databases/BackendVehiclesDatabase")]
+    [CreateAssetMenu(fileName = "BackendVehiclesDatabase", menuName = "UT/Databases/Backend vehicles database")]
     public class BackendVehiclesDatabase : VehiclesDatabase
     {
         [SerializeField] private VehicleEntryInfo[] allVehicles;

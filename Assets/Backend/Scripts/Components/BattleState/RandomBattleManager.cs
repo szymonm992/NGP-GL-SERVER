@@ -62,8 +62,6 @@ namespace Backend.Scripts.Components
             {
                 CurrentGameStateIndex = (int)OnStateEnter.signalStateStarted,
             });
-
-            
         }
 
         protected override void Update()
