@@ -17,8 +17,9 @@ namespace Backend.Scripts
 {
     public class BattleInstaller : MonoInstaller
     {
+        private const string BATTLE_TIMER_NAME = "battleTimer";
+
         [SerializeField] private RandomBattleParameters randomBattleParameters;
-        [SerializeField] private VehiclesDatabase vehiclesDatabase;
         [SerializeField] private GameParameters gameParameters;
         [SerializeField] private TextMeshProUGUI battleTimer;
 
@@ -39,7 +40,7 @@ namespace Backend.Scripts
             //=======================
 
             Container.BindInterfacesAndSelfTo<RandomBattleParameters>().FromInstance(randomBattleParameters).AsSingle();
-            Container.Bind<TextMeshProUGUI>().WithId("battleTimer").FromInstance(battleTimer).AsSingle();
+            Container.Bind<TextMeshProUGUI>().WithId(BATTLE_TIMER_NAME).FromInstance(battleTimer).AsSingle();
         }
         private void InstallNetworkComponents()
         {

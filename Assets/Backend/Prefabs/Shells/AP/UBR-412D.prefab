@@ -10,7 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5598321778703279678}
   - component: {fileID: 5598321778703279679}
+  - component: {fileID: 6531819754824872876}
   - component: {fileID: 5598321778703279664}
+  - component: {fileID: 1404468684963171394}
+  - component: {fileID: 1440109567124152977}
   m_Layer: 0
   m_Name: UBR-412D
   m_TagString: Untagged
@@ -46,10 +49,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 6531819754824872876}
   _installerPrefabs: []
   _autoRun: 1
   _kernel: {fileID: 0}
+--- !u!114 &6531819754824872876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5598321778703279665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6c598ef08f75b0418734a6667c88be0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &5598321778703279664
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -66,3 +82,36 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1404468684963171394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5598321778703279665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5543823875f14c54d9e81c6ccf7c13a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 1
+  syncRate: 0.2
+  isSender: 1
+--- !u!114 &1440109567124152977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5598321778703279665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 1404468684963171394}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 2
