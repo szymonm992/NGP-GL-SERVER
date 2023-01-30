@@ -2,6 +2,7 @@ using Backend.Scripts.Models;
 using Backend.Scripts.Signals;
 using GLShared.General.Interfaces;
 using GLShared.General.Models;
+using GLShared.General.Signals;
 using GLShared.Networking.Components;
 using GLShared.Networking.Extensions;
 using GLShared.Networking.Interfaces;
@@ -11,21 +12,26 @@ using Sfs2X.Entities.Data;
 using Sfs2X.Requests;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows;
 using Zenject;
 
 namespace Backend.Scripts.Components
 {
     public class BackendSyncManager : SyncManagerBase
     {
+        public override void Initialize()
+        {
+            base.Initialize();
+            signalBus.Subscribe<PlayerSignals.OnPlayerShot>(OnPlayerShot);
+        }
+
         public override void SyncPosition(INetworkEntity entity)
         {
             if (entity.IsPlayer)
             {
                 base.SyncPosition(entity);
                 var room = smartFox.Connection.LastJoinedRoom;
-                ISFSObject data = entity.CurrentNetworkTransform.ToISFSOBject();
-                ExtensionRequest request = new ExtensionRequest("inbattle.playerSync", data, room, false);
+                var data = entity.CurrentNetworkTransform.ToISFSOBject();
+                var request = new ExtensionRequest(NetworkConsts.RPC_PLAYER_SYNC, data, room, false);
                 smartFox.Connection.Send(request);
             }
         }
@@ -61,9 +67,10 @@ namespace Backend.Scripts.Components
             Vector3 spawnPosition, Vector3 spawnEulerAngles)
         {
             var vehicleData = vehicleDatabase.GetVehicleInfo(vehicleName);
+
             if (vehicleData != null)
             {
-                return new PlayerProperties()
+                return new ()
                 {
                     PlayerContext = vehicleData.VehiclePrefab,
                     PlayerVehicleName = vehicleData.VehicleName,
@@ -73,7 +80,13 @@ namespace Backend.Scripts.Components
                     User = user,
                 };
             }
+
             return null;
+        }
+
+        private void OnPlayerShot(PlayerSignals.OnPlayerShot OnPlayerShot)
+        {
+            TryCreateShell(OnPlayerShot.Username, OnPlayerShot.ShellId);
         }
     }
 }

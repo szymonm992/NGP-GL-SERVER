@@ -6,6 +6,7 @@ using GLShared.General.Models;
 using GLShared.General.Signals;
 using GLShared.Networking.Components;
 using GLShared.Networking.Extensions;
+using GLShared.Networking.Models;
 using Sfs2X;
 using Sfs2X.Core;
 using Sfs2X.Entities;
@@ -22,6 +23,11 @@ namespace Backend.Scripts.Models
 {
     public class RoomManager : IInitializable, ITickable
     {
+        private const string ADMIN_USER_PWD = "777 777 777";
+        private const string ZONE_NAME = "GLServerGateway";
+        private const string LOCALHOST_ADRESS = "127.0.0.1";
+        private const int CONNECTION_PORT = 9933;
+
         [Inject] private readonly SignalBus signalBus;
         [Inject] private readonly SmartFoxConnection smartFox;
         [Inject] private readonly IBattleManager battleManager;
@@ -29,9 +35,6 @@ namespace Backend.Scripts.Models
         [Inject] private readonly MapManager mapManager;
 
         private Room currentRoom;
-
-        private const string ADMIN_USER_PWD = "777 777 777";
-        private const string ZONE_NAME = "GLServerGateway";
 
         public void Initialize()
         {
@@ -67,13 +70,13 @@ namespace Backend.Scripts.Models
             smartFox.Connection.AddEventListener(SFSEvent.USER_ENTER_ROOM, OnUserEnterRoom);
             smartFox.Connection.AddEventListener(SFSEvent.EXTENSION_RESPONSE, OnExtensionResponse);
 
-            ConfigData connectionConfigData = new ConfigData
+            ConfigData connectionConfigData = new()
             {
-                Host = "127.0.0.1",
-                Port = 9933,
+                Host = LOCALHOST_ADRESS,
+                Port = CONNECTION_PORT,
                 Zone = ZONE_NAME,
-                UdpHost = "127.0.0.1",
-                UdpPort = 9933,
+                UdpHost = LOCALHOST_ADRESS,
+                UdpPort = CONNECTION_PORT,
             };
 
             smartFox.Connection.Connect(connectionConfigData);
@@ -84,8 +87,8 @@ namespace Backend.Scripts.Models
             var room = smartFox.Connection.LastJoinedRoom;
 
             ISFSObject data = new SFSObject();
-            data.PutInt("currentCountdownValue", OnGameCountdownUpdate.CurrentCountdownValue);
-            var request = new ExtensionRequest("inbattle.gameStartCountdown", data, room, false);
+            data.PutInt(NetworkConsts.VAR_CURRENT_COUNTDOWN, OnGameCountdownUpdate.CurrentCountdownValue);
+            var request = new ExtensionRequest(NetworkConsts.RPC_GAME_START_COUNTDOWN, data, room, false);
 
             smartFox.Connection.Send(request);
         }
@@ -95,7 +98,7 @@ namespace Backend.Scripts.Models
             var room = smartFox.Connection.LastJoinedRoom;
 
             ISFSObject data = OnPlayerSpawned.PlayerProperties.ToISFSOBject();
-            var request = new ExtensionRequest("inbattle.playerSpawned", data, room, false);
+            var request = new ExtensionRequest(NetworkConsts.RPC_PLAYER_SPAWNED, data, room, false);
 
             smartFox.Connection.Send(request);
         }
@@ -105,7 +108,7 @@ namespace Backend.Scripts.Models
             var room = smartFox.Connection.LastJoinedRoom;
 
             ISFSObject data = null;
-            var request = new ExtensionRequest("inbattle.playerShot", data, room, false);
+            var request = new ExtensionRequest(NetworkConsts.RPC_PLAYER_SHOT, data, room, false);
 
             smartFox.Connection.Send(request);
         }
@@ -113,11 +116,11 @@ namespace Backend.Scripts.Models
         private void OnBattleTimeChanged(PlayerSignals.OnBattleTimeChanged OnBattleTimeChanged)
         {
             var room = smartFox.Connection.LastJoinedRoom;
+            var data = new SFSObject();
 
-            ISFSObject data = new SFSObject();
-            data.PutInt("minutesLeft", OnBattleTimeChanged.CurrentMinutesLeft);
-            data.PutInt("secondsLeft", OnBattleTimeChanged.CurrentSecondsLeft);
-            var request = new ExtensionRequest("inbattle.battleTimer", data, room, false);
+            data.PutInt(NetworkConsts.VAR_MINUTES_LEFT, OnBattleTimeChanged.CurrentMinutesLeft);
+            data.PutInt(NetworkConsts.VAR_SECONDS_LEFT, OnBattleTimeChanged.CurrentSecondsLeft);
+            var request = new ExtensionRequest(NetworkConsts.RPC_BATTLE_TIMER, data, room, false);
 
             smartFox.Connection.Send(request);
         }
@@ -147,8 +150,8 @@ namespace Backend.Scripts.Models
             var room = smartFox.Connection.LastJoinedRoom;
 
             ISFSObject data = new SFSObject();
-            data.PutInt("currentGameStage", gameStateIndex);
-            var request = new ExtensionRequest("inbattle.sendGameStage", data, room, false);
+            data.PutInt(NetworkConsts.VAR_CURRENT_GAME_STAGE, gameStateIndex);
+            var request = new ExtensionRequest(NetworkConsts.RPC_SEND_GAME_STATE, data, room, false);
 
             smartFox.Connection.Send(request);
         }
@@ -268,19 +271,15 @@ namespace Backend.Scripts.Models
 
         private void OnLogin(BaseEvent evt)
         {
-            ISFSObject data = new SFSObject();
-
-            SendRoomJoinRequest("adminJoinRoom", data);
-
+            var data = new SFSObject();
+            SendRoomJoinRequest(NetworkConsts.REQ_ADMIN_JOIN_ROOM, data);
             smartFox.Connection.InitUDP();
         }
         #endregion
 
         private void TryLogin()
         {
-            string username = "$ADMIN$(" + System.DateTime.UtcNow.Millisecond.ToString() 
-                + "|" + (Random.Range(1, 99999).ToString() + ")").ToString();
-
+            string username = $"$ADMIN$({System.DateTime.UtcNow.Millisecond} | {Random.Range(1, 99999)})";
             smartFox.Connection.Send(new LoginRequest(username, ADMIN_USER_PWD, ZONE_NAME));
         }
 
