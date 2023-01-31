@@ -87,7 +87,7 @@ namespace Backend.Scripts.Models
         {
             var room = smartFox.Connection.LastJoinedRoom;
 
-            ISFSObject data = new SFSObject();
+            var data = new SFSObject();
             data.PutInt(NetworkConsts.VAR_CURRENT_COUNTDOWN, OnGameCountdownUpdate.CurrentCountdownValue);
             var request = new ExtensionRequest(NetworkConsts.RPC_GAME_START_COUNTDOWN, data, room, false);
 
@@ -97,8 +97,22 @@ namespace Backend.Scripts.Models
         private void OnPlayerSpawned(SyncSignals.OnPlayerSpawned OnPlayerSpawned)
         {
             var room = smartFox.Connection.LastJoinedRoom;
+            var user = smartFox.Connection.UserManager.GetUserByName(OnPlayerSpawned.PlayerProperties.Username);
 
-            ISFSObject data = OnPlayerSpawned.PlayerProperties.ToISFSOBject();
+            if (user == null)
+            {
+                Debug.LogError($"User '{OnPlayerSpawned.PlayerProperties.Username}' has not been found in UserManager!");
+                return;
+            }
+
+            if (!user.ContainsVariable(NetworkConsts.VAR_PLAYER_VEHICLE))
+            {
+                Debug.LogError($"User does not contain '{NetworkConsts.VAR_PLAYER_VEHICLE}' variable");
+                return;
+            }
+
+            string vehicleName = user.GetVariable(NetworkConsts.VAR_PLAYER_VEHICLE).Value.ToString();
+            var data = OnPlayerSpawned.PlayerProperties.ToISFSOBject(vehicleName);
             var request = new ExtensionRequest(NetworkConsts.RPC_PLAYER_SPAWNED, data, room, false);
 
             smartFox.Connection.Send(request);
@@ -118,8 +132,9 @@ namespace Backend.Scripts.Models
         {
             var room = smartFox.Connection.LastJoinedRoom;
 
-            ISFSObject data = null;
+            var data = OnShellSpawned.ShellProperties.ToISFSOBject(OnShellSpawned.ShellProperties.ShellId);
             var request = new ExtensionRequest(NetworkConsts.RPC_SHELL_SPAWNED, data, room, false);
+            Debug.Log("sending " + NetworkConsts.RPC_SHELL_SPAWNED);
 
             smartFox.Connection.Send(request);
         }

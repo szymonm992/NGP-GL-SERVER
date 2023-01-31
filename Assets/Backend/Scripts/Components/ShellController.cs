@@ -17,7 +17,5 @@ namespace Backend.Scripts.Components
         {
             Debug.Log("shell initialized");
         }
-
-       
     }
 }

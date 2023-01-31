@@ -1,16 +1,11 @@
-using Backend.Scripts.Models;
 using Backend.Scripts.Signals;
 using GLShared.General.Interfaces;
 using GLShared.General.Models;
 using GLShared.General.Signals;
-using GLShared.Networking.Components;
 using GLShared.Networking.Extensions;
 using GLShared.Networking.Interfaces;
 using GLShared.Networking.Models;
-using Sfs2X.Entities;
-using Sfs2X.Entities.Data;
 using Sfs2X.Requests;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -87,7 +82,7 @@ namespace Backend.Scripts.Components
 
         private void OnPlayerShot(PlayerSignals.OnPlayerShot OnPlayerShot)
         {
-            TryCreateShell(OnPlayerShot.Username, OnPlayerShot.ShellId);
+            TryCreateShell(OnPlayerShot.Username, OnPlayerShot.ShellId, OnPlayerShot.ShellSpawnPosition, OnPlayerShot.ShellSpawnEulerAngles);
         }
     }
 }
