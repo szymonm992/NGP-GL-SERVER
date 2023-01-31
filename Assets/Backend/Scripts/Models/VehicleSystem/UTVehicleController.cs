@@ -124,7 +124,7 @@ namespace Backend.Scripts.Models
 
         private void OnPlayerSpawned(PlayerSignals.OnPlayerSpawned OnPlayerSpawned)
         {
-            if (OnPlayerSpawned.PlayerProperties.User.Name == playerEntity.Username)
+            if (OnPlayerSpawned.PlayerProperties.Username == playerEntity.Username)
             {
                 gameObject.name = "(" + OnPlayerSpawned.PlayerProperties.PlayerVehicleName + ")Player '" + playerEntity.Username + "'";
                 signalBus.Fire(new PlayerSignals.OnPlayerInitialized()

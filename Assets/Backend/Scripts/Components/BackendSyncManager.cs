@@ -53,9 +53,9 @@ namespace Backend.Scripts.Components
             }
         }
 
-        protected override void CreatePlayer(User user, Vector3 spawnPosition, Vector3 spawnEulerAngles, out PlayerProperties playerProperties)
+        protected override void CreatePlayer(string username, Vector3 spawnPosition, Vector3 spawnEulerAngles, out PlayerProperties playerProperties)
         {
-            base.CreatePlayer(user, spawnPosition, spawnEulerAngles, out playerProperties);
+            base.CreatePlayer(username, spawnPosition, spawnEulerAngles, out playerProperties);
             
             signalBus.Fire(new SyncSignals.OnPlayerSpawned()
             {
@@ -63,7 +63,7 @@ namespace Backend.Scripts.Components
             });
         }
 
-        protected override PlayerProperties GetPlayerInitData(User user, string vehicleName, 
+        protected override PlayerProperties GetPlayerInitData(string username, string vehicleName, 
             Vector3 spawnPosition, Vector3 spawnEulerAngles)
         {
             var vehicleData = vehicleDatabase.GetVehicleInfo(vehicleName);
@@ -77,12 +77,13 @@ namespace Backend.Scripts.Components
                     IsLocal = false,
                     SpawnPosition = spawnPosition,
                     SpawnRotation = Quaternion.Euler(spawnEulerAngles.x, spawnEulerAngles.y, spawnEulerAngles.z),
-                    User = user,
+                    Username = username,
                 };
             }
 
             return null;
         }
+
 
         private void OnPlayerShot(PlayerSignals.OnPlayerShot OnPlayerShot)
         {

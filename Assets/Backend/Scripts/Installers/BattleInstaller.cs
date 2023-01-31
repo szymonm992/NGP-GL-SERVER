@@ -1,7 +1,7 @@
 using Backend.Scripts.Components;
 using Backend.Scripts.Models;
 using Backend.Scripts.Signals;
-using Frontend.Scripts;
+using GLShared.General.Components;
 using GLShared.General.Interfaces;
 using GLShared.General.Models;
 using GLShared.General.ScriptableObjects;
@@ -32,12 +32,18 @@ namespace Backend.Scripts
 
         private void InstallMain()
         {
-            //PLAYER SPAWNING SHARED LOGIC========
+            //PLAYER SPAWNING LOGIC
             Container.BindInterfacesAndSelfTo<PlayerSpawner>().FromNewComponentOnNewGameObject().AsCached().NonLazy();
             Container.Bind<PlayerProperties>().FromInstance(new PlayerProperties()).AsCached();
             Container.BindFactory<PlayerEntity, PlayerProperties, PlayerEntity, PlayerSpawner.Factory>().FromSubContainerResolve()
                 .ByInstaller<PlayerSpawner.PlayerInstaller>();
-            //=======================
+
+            //SHELL SPAWNING LOGIC
+            Container.BindInterfacesAndSelfTo<ShellSpawner>().FromNewComponentOnNewGameObject().AsCached().NonLazy();
+            Container.Bind<ShellProperties>().FromInstance(new ShellProperties()).AsCached();
+            Container.BindFactory<ShellEntity, ShellProperties, ShellEntity, ShellSpawner.Factory>().FromSubContainerResolve()
+                .ByInstaller<ShellSpawner.ShellInstaller>();
+
 
             Container.BindInterfacesAndSelfTo<RandomBattleParameters>().FromInstance(randomBattleParameters).AsSingle();
             Container.Bind<TextMeshProUGUI>().WithId(BATTLE_TIMER_NAME).FromInstance(battleTimer).AsSingle();
@@ -62,6 +68,8 @@ namespace Backend.Scripts
             Container.DeclareSignal<PlayerSignals.OnPlayerDetectionStatusUpdate>();
             Container.DeclareSignal<PlayerSignals.OnPlayerShot>();
             Container.DeclareSignal<PlayerSignals.OnBattleTimeChanged>();
+
+            Container.DeclareSignal<ShellSignals.OnShellSpawned>();
 
             //backend signals
             Container.DeclareSignal<SyncSignals.OnPlayerSpawned>();

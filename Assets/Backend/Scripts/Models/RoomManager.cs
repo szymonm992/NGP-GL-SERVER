@@ -43,6 +43,7 @@ namespace Backend.Scripts.Models
             signalBus.Subscribe<SyncSignals.OnPlayerSpawned>(OnPlayerSpawned);
             signalBus.Subscribe<PlayerSignals.OnBattleTimeChanged>(OnBattleTimeChanged);
             signalBus.Subscribe<PlayerSignals.OnPlayerShot>(OnPlayerShot);
+            signalBus.Subscribe<ShellSignals.OnShellSpawned>(OnShellSpawned);
 
             ConnectToServerGateway();
         }
@@ -109,6 +110,16 @@ namespace Backend.Scripts.Models
 
             ISFSObject data = null;
             var request = new ExtensionRequest(NetworkConsts.RPC_PLAYER_SHOT, data, room, false);
+
+            smartFox.Connection.Send(request);
+        }
+
+        private void OnShellSpawned(ShellSignals.OnShellSpawned OnShellSpawned)
+        {
+            var room = smartFox.Connection.LastJoinedRoom;
+
+            ISFSObject data = null;
+            var request = new ExtensionRequest(NetworkConsts.RPC_SHELL_SPAWNED, data, room, false);
 
             smartFox.Connection.Send(request);
         }
@@ -183,7 +194,7 @@ namespace Backend.Scripts.Models
 
                         if (freeSpawnPoint != null)
                         {
-                            syncManager.TryCreatePlayer(actualUser, freeSpawnPoint.SpawnPosition, freeSpawnPoint.SpawnEulerAngles);
+                            syncManager.TryCreatePlayer(actualUser.Name, freeSpawnPoint.SpawnPosition, freeSpawnPoint.SpawnEulerAngles);
                             freeSpawnPoint.SetFree(false);
                         }
                         else
