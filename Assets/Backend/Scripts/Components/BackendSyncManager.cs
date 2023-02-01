@@ -2,6 +2,7 @@ using Backend.Scripts.Signals;
 using GLShared.General.Interfaces;
 using GLShared.General.Models;
 using GLShared.General.Signals;
+using GLShared.Networking.Components;
 using GLShared.Networking.Extensions;
 using GLShared.Networking.Interfaces;
 using GLShared.Networking.Models;
@@ -13,20 +14,23 @@ namespace Backend.Scripts.Components
 {
     public class BackendSyncManager : SyncManagerBase
     {
+
         public override void Initialize()
         {
             base.Initialize();
             signalBus.Subscribe<PlayerSignals.OnPlayerShot>(OnPlayerShot);
         }
 
-        public override void SyncPosition(INetworkEntity entity)
+        public override void SyncPosition(PlayerEntity entity)
         {
             if (entity.IsPlayer)
             {
                 base.SyncPosition(entity);
+
                 var room = smartFox.Connection.LastJoinedRoom;
-                var data = entity.CurrentNetworkTransform.ToISFSOBject();
+                var data = entity.CurrentTransform.ToISFSOBject();
                 var request = new ExtensionRequest(NetworkConsts.RPC_PLAYER_SYNC, data, room, false);
+
                 smartFox.Connection.Send(request);
             }
         }
@@ -40,12 +44,15 @@ namespace Backend.Scripts.Components
             }
         }
 
-        public override void SyncShell(IShellController shellController)
+        public override void SyncShell(ShellEntity shellEntity)
         {
-            if (connectedPlayers.ContainsKey(shellController.OwnerUsername))
-            {
-                base.SyncShell(shellController);
-            }
+            base.SyncShell(shellEntity);
+
+            var room = smartFox.Connection.LastJoinedRoom;
+            var data = shellEntity.CurrentTransform.ToISFSOBject();
+            var request = new ExtensionRequest(NetworkConsts.RPC_SHELL_SYNC, data, room, false);
+
+            smartFox.Connection.Send(request);
         }
 
         protected override void CreatePlayer(string username, Vector3 spawnPosition, Vector3 spawnEulerAngles, out PlayerProperties playerProperties)
