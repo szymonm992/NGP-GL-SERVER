@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectType: 1
   isSender: 1
-  syncRate: 0.2
+  syncRate: 0.1
 --- !u!114 &1440109567124152977
 MonoBehaviour:
   m_ObjectHideFlags: 0

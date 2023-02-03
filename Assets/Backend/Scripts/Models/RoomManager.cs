@@ -132,7 +132,7 @@ namespace Backend.Scripts.Models
         {
             var room = smartFox.Connection.LastJoinedRoom;
 
-            var data = OnShellSpawned.ShellProperties.ToISFSOBject(OnShellSpawned.ShellProperties.ShellId);
+            var data = OnShellSpawned.ShellProperties.ToISFSOBject();
             var request = new ExtensionRequest(NetworkConsts.RPC_SHELL_SPAWNED, data, room, false);
             Debug.Log("sending " + NetworkConsts.RPC_SHELL_SPAWNED);
 
