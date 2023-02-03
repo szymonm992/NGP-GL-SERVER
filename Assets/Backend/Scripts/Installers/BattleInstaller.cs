@@ -70,6 +70,7 @@ namespace Backend.Scripts
             Container.DeclareSignal<PlayerSignals.OnBattleTimeChanged>();
 
             Container.DeclareSignal<ShellSignals.OnShellSpawned>();
+            Container.DeclareSignal<ShellSignals.OnShellDestroyed>();
 
             //backend signals
             Container.DeclareSignal<SyncSignals.OnPlayerSpawned>();

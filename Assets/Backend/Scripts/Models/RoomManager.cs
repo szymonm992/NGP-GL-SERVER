@@ -40,10 +40,13 @@ namespace Backend.Scripts.Models
         {
             signalBus.Subscribe<SyncSignals.OnGameStateChanged>(OnGameStateChanged);
             signalBus.Subscribe<SyncSignals.OnGameCountdownUpdate>(OnGameCountdownUpdate);
-            signalBus.Subscribe<SyncSignals.OnPlayerSpawned>(OnPlayerSpawned);
             signalBus.Subscribe<PlayerSignals.OnBattleTimeChanged>(OnBattleTimeChanged);
+
             signalBus.Subscribe<PlayerSignals.OnPlayerShot>(OnPlayerShot);
+            signalBus.Subscribe<SyncSignals.OnPlayerSpawned>(OnPlayerSpawned);
+
             signalBus.Subscribe<ShellSignals.OnShellSpawned>(OnShellSpawned);
+            signalBus.Subscribe<ShellSignals.OnShellDestroyed>(OnShellDestroyed);
 
             ConnectToServerGateway();
         }
@@ -134,7 +137,17 @@ namespace Backend.Scripts.Models
 
             var data = OnShellSpawned.ShellProperties.ToISFSOBject();
             var request = new ExtensionRequest(NetworkConsts.RPC_SHELL_SPAWNED, data, room, false);
-            Debug.Log("sending " + NetworkConsts.RPC_SHELL_SPAWNED);
+
+            smartFox.Connection.Send(request);
+        }
+
+        private void OnShellDestroyed(ShellSignals.OnShellDestroyed OnShellDestroyed)
+        {
+            var room = smartFox.Connection.LastJoinedRoom;
+
+            ISFSObject data = new SFSObject();
+            data.PutInt("id", OnShellDestroyed.ShellSceneId);
+            var request = new ExtensionRequest(NetworkConsts.RPC_SHELL_DESTROYED, data, room, false);
 
             smartFox.Connection.Send(request);
         }
