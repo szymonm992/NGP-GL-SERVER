@@ -123,10 +123,6 @@ namespace Backend.Scripts.Components
 
         private void ShellMovementOnCurve()
         {
-
-            
-
-
             var positionOnCurve = GetShellPositionAt(time);
             collisionInfo = ReturnCollisionInfo(positionOnCurve);
             transform.position = collisionInfo.CollisionPoint;
@@ -139,7 +135,7 @@ namespace Backend.Scripts.Components
             transform.rotation = Quaternion.LookRotation(GetShellPositionAt(time + ROTATION_TIME_OFFSET) - transform.position);
             time += Time.deltaTime;
         }
-        /*
+        
         private Vector3 GetShellPositionAt(float time)
         {
             //calculating relative position in 2d plane.
@@ -151,56 +147,7 @@ namespace Backend.Scripts.Components
             finalPos.y += relativeY;
 
             return finalPos;
-        }*/
-
-        private Vector3 GetShellPositionAt(float time)
-        {
-            NativeArray<Vector3> result = new(1, Allocator.TempJob);
-
-            var jobData = new GetShellPositionOnCurveJob()
-            {
-                time = time,
-                startingPosition = startingPosition,
-                angle = angle,
-                direction = direction,
-                gravity = gravity,
-                velocity = velocity,
-            };
-
-            var handle = jobData.Schedule();
-            handle.Complete();
-
-            var retVal = result[0];
-            result.Dispose();
-
-            return retVal;
         }
-
-        [BurstCompile]
-        private struct GetShellPositionOnCurveJob : IJob
-        {
-            [ReadOnly] public float time;
-            [ReadOnly] public float gravity;
-            [ReadOnly] public float angle;
-            [ReadOnly] public float velocity;
-            [ReadOnly] public Vector3 direction;
-            [ReadOnly] public Vector3 startingPosition;
-            
-            public NativeArray<Vector3> result;
-
-            public void Execute()
-            {
-                float relativeX = velocity * time * Mathf.Cos(angle);
-                float relativeY = velocity * time * Mathf.Sin(angle) - GRAVITY_MULTIPLIER * gravity * time * time;
-
-                var finalPos = startingPosition;
-                finalPos += direction * relativeX;
-                finalPos.y += relativeY;
-
-                result[0] = finalPos;
-            }
-        }
-
 
         private ShellCollisionInfo ReturnCollisionInfo(Vector3 desiredPosition)
         {
