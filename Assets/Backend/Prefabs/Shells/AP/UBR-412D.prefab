@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5598321778703279678}
   - component: {fileID: 5598321778703279679}
   - component: {fileID: 6531819754824872876}
-  - component: {fileID: 5598321778703279664}
   - component: {fileID: 1404468684963171394}
   - component: {fileID: 1440109567124152977}
   - component: {fileID: 5587321303068152238}
@@ -70,22 +69,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6c598ef08f75b0418734a6667c88be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &5598321778703279664
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5598321778703279665}
-  serializedVersion: 2
-  m_Mass: 0.5
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &1404468684963171394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39f02f245512b1a46a509bdf59fb9407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
+  speed: 1000
   gravityMultiplier: 0.5
   penetration: 200
   damage: 400

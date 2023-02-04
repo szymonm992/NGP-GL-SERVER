@@ -39,7 +39,7 @@ namespace Backend.Scripts.Components
 
         public void Initialize()
         {
-            targetPosition = transform.position + (transform.forward * 100f);
+            targetPosition = shellEntity.Properties.TargetingPosition;
 
             InitializeShellParameters();
             Destroy(gameObject, shellDestructionTime);
@@ -125,7 +125,7 @@ namespace Backend.Scripts.Components
         {
             var positionOnCurve = GetShellPositionAt(time);
             collisionInfo = ReturnCollisionInfo(positionOnCurve);
-            transform.position = collisionInfo.CollisionPoint;
+            transform.position = Vector3.MoveTowards(transform.position, collisionInfo.CollisionPoint, Time.deltaTime * velocity);
 
             if (isColliding)
             {
