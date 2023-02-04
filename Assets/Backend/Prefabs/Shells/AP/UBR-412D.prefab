@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectType: 1
   isSender: 1
-  syncRate: 0.1
+  syncRate: 0.07
 --- !u!114 &1440109567124152977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,6 +136,7 @@ MonoBehaviour:
   shellsMask:
     serializedVersion: 2
     m_Bits: 2147483647
+  shellDestructionTime: 5
   targetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &6542490389731312431
 MonoBehaviour:
@@ -149,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39f02f245512b1a46a509bdf59fb9407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 25
+  speed: 100
   gravityMultiplier: 0.5
   penetration: 200
   damage: 400
