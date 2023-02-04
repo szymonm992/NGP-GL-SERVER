@@ -53,9 +53,10 @@ namespace Backend.Scripts.Components
             smartFox.Connection.Send(request);
         }
 
-        protected override void CreateShell(string username, string databaseIdentifier, int sceneIdentifier, Vector3 spawnPosition, Vector3 spawnEulerAngles, Vector3 targetingPositions, out ShellProperties shellProperties)
+        protected override void CreateShell(string username, string databaseIdentifier, int sceneIdentifier, Vector3 spawnPosition, Vector3 spawnEulerAngles,
+            (Vector3, float) targetingProperties, out ShellProperties shellProperties)
         {
-            base.CreateShell(username, databaseIdentifier, sceneIdentifier, spawnPosition, spawnEulerAngles, targetingPositions, out shellProperties);
+            base.CreateShell(username, databaseIdentifier, sceneIdentifier, spawnPosition, spawnEulerAngles, targetingProperties, out shellProperties);
 
             signalBus.Fire(new ShellSignals.OnShellSpawned()
             {
@@ -97,7 +98,7 @@ namespace Backend.Scripts.Components
 
         private void OnPlayerShot(PlayerSignals.OnPlayerShot OnPlayerShot)
         {
-            TryCreateShell(OnPlayerShot.Username, OnPlayerShot.ShellId, spawnedShellsAmount, OnPlayerShot.ShellSpawnPosition, OnPlayerShot.ShellSpawnEulerAngles, OnPlayerShot.TargetingPosition);
+            TryCreateShell(OnPlayerShot.Username, OnPlayerShot.ShellId, spawnedShellsAmount, OnPlayerShot.ShellSpawnPosition, OnPlayerShot.ShellSpawnEulerAngles, OnPlayerShot.TargetingProperties);
         }
     }
 }

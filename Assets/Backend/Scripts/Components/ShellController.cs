@@ -29,7 +29,7 @@ namespace Backend.Scripts.Components
         private float velocity; //Speed, usually same as shellConfig.Speed, but can be changed
         private Vector3 direction; //Normalized direction to the target on XZ plane
         private Vector3 startingPosition;
-        public Vector3 targetPosition; //TODO: handle it
+        public (Vector3 point, float distance) targetProperties;
         private ShellCollisionInfo collisionInfo;
 
         private bool isColliding = false;
@@ -39,7 +39,7 @@ namespace Backend.Scripts.Components
 
         public void Initialize()
         {
-            targetPosition = shellEntity.Properties.TargetingPosition;
+            targetProperties = shellEntity.Properties.TargetingProperties;
 
             InitializeShellParameters();
             Destroy(gameObject, shellDestructionTime);
@@ -54,7 +54,7 @@ namespace Backend.Scripts.Components
         {
             startingPosition = transform.position;
             gravity = -Physics.gravity.y * shellStats.GravityMultiplier;
-            var targetDir = targetPosition - startingPosition;
+            var targetDir = targetProperties.point - startingPosition;
 
             // making it a 2d problem
             float relX = Mathf.Sqrt(targetDir.x * targetDir.x + targetDir.z * targetDir.z); // horizontal movement
@@ -93,7 +93,7 @@ namespace Backend.Scripts.Components
         {
             if (!isColliding)
             {
-                if (!hasBounced)
+                if (!hasBounced && targetProperties.distance > 50f)
                 {
                     ShellMovementOnCurve();
                 }
