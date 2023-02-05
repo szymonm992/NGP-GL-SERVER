@@ -14,6 +14,7 @@ namespace Backend.Scripts.Components
         private const float MAX_SHOOTING_ANGLE = 5.0f;
         private const float GRAVITY_MULTIPLIER = 0.5f;
         private const float ROTATION_TIME_OFFSET = 0.1f;
+        private const float MINIMUM_CURVE_MOVEMENT_DISTANCE = 50f;
 
         [Inject] private readonly IShellStats shellStats;
         [Inject] private readonly SignalBus signalBus;
@@ -86,14 +87,14 @@ namespace Backend.Scripts.Components
             // setting all necessary values
             angle = shootAngle;
             time = 0;
-            direction = new Vector3(targetDir.x, 0, targetDir.z).normalized;
+            direction = new Vector3(targetDir.x, 0f, targetDir.z).normalized;
         }
 
         private void FixedUpdate()
         {
             if (!isColliding)
             {
-                if (!hasBounced && targetProperties.distance > 50f)
+                if (!hasBounced && targetProperties.distance > MINIMUM_CURVE_MOVEMENT_DISTANCE)
                 {
                     ShellMovementOnCurve();
                 }
@@ -158,7 +159,7 @@ namespace Backend.Scripts.Components
             {
                 //Debug.DrawRay(shellray.origin, shellray.direction*shellhit.distance,Color.green);
 
-                return new()
+                return new ()
                 {
                     IsColliding = true,
                     CollisionPoint = hit.point,

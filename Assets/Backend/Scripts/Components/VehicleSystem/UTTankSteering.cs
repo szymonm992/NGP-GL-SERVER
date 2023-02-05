@@ -1,6 +1,4 @@
 using GLShared.General.Interfaces;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -47,17 +45,25 @@ namespace Backend.Scripts.Components
                 currentSteerForce *= (1.0f / Mathf.Sqrt(2));
             }
 
+            if (!suspensionController.RunPhysics)
+            {
+                return;
+            }
+
             foreach (var axle in suspensionController.AllAxles)
             {
                 if (axle.CanSteer)
                 {
                     var wheelsInAxle = axle.AllWheels;
+
                     foreach (var wheel in wheelsInAxle)
                     {
+                        int invertValue = axle.InvertSteer ? -1 : 1;
                         if (wheel.IsGrounded)
                         {
-                            int invertValue = axle.InvertSteer ? -1 : 1;
-                            rig.AddForceAtPosition(invertValue * currentSteerForce * steerInput * rig.transform.right, wheel.HitInfo.Point, ForceMode.Acceleration);
+                            float idlerMultiplier = wheel.IsIdler ? 0.3f : 1f;
+                            rig.AddForceAtPosition(invertValue * currentSteerForce * idlerMultiplier * steerInput * rig.transform.right,
+                                wheel.HitInfo.Point, ForceMode.Force);
                         }
                     }
                 }

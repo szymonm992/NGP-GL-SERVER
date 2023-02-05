@@ -7826,7 +7826,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   centerOfMass: {fileID: 827835342807614448}
   vehicleType: 2
-  maxSlopeAngle: 35
+  maxSlopeAngle: 40
   forwardPowerCurve:
     serializedVersion: 2
     m_Curve:
