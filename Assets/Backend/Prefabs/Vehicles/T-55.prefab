@@ -7821,7 +7821,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6364528611701590919}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2d14a5b989b5524f9b88c42d624f6ad, type: 3}
+  m_Script: {fileID: 11500000, guid: c90d453425c0a1f4db8bd4bb10c42227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   centerOfMass: {fileID: 827835342807614448}
@@ -7969,7 +7969,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 958b5d3c042f13a41976032c35246b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  steerForce: 150000
+  steerForce: 180000
 --- !u!114 &8512473939195294725
 MonoBehaviour:
   m_ObjectHideFlags: 0
