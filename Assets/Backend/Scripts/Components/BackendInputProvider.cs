@@ -1,9 +1,6 @@
-using Backend.Scripts.Models;
 using GLShared.General.Interfaces;
 using GLShared.General.Models;
 using GLShared.General.Signals;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 using GLShared.General.Utilities;
@@ -38,7 +35,7 @@ namespace Backend.Scripts.Components
 
         public void Initialize()
         {
-            this.currentInput = currentInput.EmptyPlayerInput();
+            currentInput = currentInput.EmptyPlayerInput();
             signalBus.Subscribe<PlayerSignals.OnAllPlayersInputLockUpdate>(OnAllPlayersInputLockUpdate);
         }
 
@@ -46,15 +43,15 @@ namespace Backend.Scripts.Components
         {
             if (currentInput != null)
             { 
-                this.lastVertical = currentInput.Vertical;
+                lastVertical = currentInput.Vertical;
             }
 
-            this.currentInput = lockPlayerInput ? currentInput.EmptyPlayerInput() : input;
+            currentInput = lockPlayerInput ? currentInput.EmptyPlayerInput() : input;
         }
 
         private void OnAllPlayersInputLockUpdate(PlayerSignals.OnAllPlayersInputLockUpdate OnAllPlayersInputLockUpdate)
         {
-            this.lockPlayerInput = OnAllPlayersInputLockUpdate.LockPlayersInput;
+            lockPlayerInput = OnAllPlayersInputLockUpdate.LockPlayersInput;
         }
     }
 }
