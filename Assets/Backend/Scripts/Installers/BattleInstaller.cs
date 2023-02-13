@@ -21,6 +21,7 @@ namespace Backend.Scripts
 
         [SerializeField] private RandomBattleParameters randomBattleParameters;
         [SerializeField] private GameParameters gameParameters;
+        [SerializeField] private Terrain mainTerrain;
         [SerializeField] private TextMeshProUGUI battleTimer;
 
         public override void InstallBindings()
@@ -47,6 +48,9 @@ namespace Backend.Scripts
 
             Container.BindInterfacesAndSelfTo<RandomBattleParameters>().FromInstance(randomBattleParameters).AsSingle();
             Container.Bind<TextMeshProUGUI>().WithId(BATTLE_TIMER_NAME).FromInstance(battleTimer).AsSingle();
+
+            Container.BindInterfacesAndSelfTo<GroundManager>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<Terrain>().WithId("mainTerrain").FromInstance(mainTerrain).AsSingle();
         }
         private void InstallNetworkComponents()
         {
