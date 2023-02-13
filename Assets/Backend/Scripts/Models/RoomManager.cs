@@ -26,6 +26,8 @@ namespace Backend.Scripts.Models
         private const string ADMIN_USER_PWD = "777 777 777";
         private const string ZONE_NAME = "GLServerGateway";
         private const string LOCALHOST_ADRESS = "127.0.0.1";
+        private const string ADMIN_USERNAME_PREFIX = "$ADMIN$";
+
         private const int CONNECTION_PORT = 9933;
 
         [Inject] private readonly SignalBus signalBus;
@@ -74,7 +76,7 @@ namespace Backend.Scripts.Models
             smartFox.Connection.AddEventListener(SFSEvent.USER_ENTER_ROOM, OnUserEnterRoom);
             smartFox.Connection.AddEventListener(SFSEvent.EXTENSION_RESPONSE, OnExtensionResponse);
 
-            ConfigData connectionConfigData = new()
+            ConfigData connectionConfigData = new ()
             {
                 Host = LOCALHOST_ADRESS,
                 Port = CONNECTION_PORT,
@@ -318,7 +320,7 @@ namespace Backend.Scripts.Models
 
         private void TryLogin()
         {
-            string username = $"$ADMIN$({System.DateTime.UtcNow.Millisecond} | {Random.Range(1, 99999)})";
+            string username = $"{ADMIN_USERNAME_PREFIX}({System.DateTime.UtcNow.Millisecond} | {Random.Range(1, 99999)})";
             smartFox.Connection.Send(new LoginRequest(username, ADMIN_USER_PWD, ZONE_NAME));
         }
 
