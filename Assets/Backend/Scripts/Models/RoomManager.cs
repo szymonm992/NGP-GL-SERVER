@@ -224,7 +224,7 @@ namespace Backend.Scripts.Models
 
                         if (freeSpawnPoint != null)
                         {
-                            syncManager.TryCreatePlayer(actualUser.Name, freeSpawnPoint.SpawnPosition, freeSpawnPoint.SpawnEulerAngles);
+                            syncManager.TryCreatePlayer(actualUser.Name, team, freeSpawnPoint.SpawnPosition, freeSpawnPoint.SpawnEulerAngles);
                             freeSpawnPoint.SetFree(false);
                         }
                         else

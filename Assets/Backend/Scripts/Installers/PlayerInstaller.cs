@@ -18,6 +18,8 @@ namespace Backend.Scripts
 
             Container.BindInterfacesAndSelfTo<UTAxleBase>().FromComponentsInHierarchy().AsCached();
             Container.BindInterfacesAndSelfTo<UTPhysicWheelBase>().FromComponentsInHierarchy().AsCached().NonLazy();
+
+            Container.BindInterfacesAndSelfTo<Armor>().FromComponentsInHierarchy().AsCached();
         }
     }
 }

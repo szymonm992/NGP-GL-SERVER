@@ -120,7 +120,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2147483647
   shellDestructionTime: 5
-  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &6542490389731312431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,9 +134,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1200
   gravityMultiplier: 0.5
-  penetration: 200
+  penetration: 267
   damage: 400
-  caliber: 120
+  caliber: 100
 --- !u!33 &3284177520001675366
 MeshFilter:
   m_ObjectHideFlags: 0

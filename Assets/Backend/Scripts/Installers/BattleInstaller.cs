@@ -1,5 +1,6 @@
 using Backend.Scripts.Components;
 using Backend.Scripts.Models;
+using Backend.Scripts.ScriptableObjects;
 using Backend.Scripts.Signals;
 using GLShared.General.Components;
 using GLShared.General.Interfaces;
@@ -20,6 +21,7 @@ namespace Backend.Scripts
         private const string BATTLE_TIMER_NAME = "battleTimer";
 
         [SerializeField] private RandomBattleParameters randomBattleParameters;
+        [SerializeField] private ShellsSettings shellsSettings;
         [SerializeField] private GameParameters gameParameters;
         [SerializeField] private Terrain mainTerrain;
         [SerializeField] private TextMeshProUGUI battleTimer;
@@ -55,7 +57,10 @@ namespace Backend.Scripts
         private void InstallNetworkComponents()
         {
             Container.Bind<SmartFoxConnection>().FromComponentInHierarchy().AsSingle().NonLazy();
+
             Container.Bind<GameParameters>().FromInstance(gameParameters).AsSingle();
+            Container.Bind<ShellsSettings>().FromInstance(shellsSettings).AsSingle();
+
             Container.BindInterfacesAndSelfTo<RoomManager>().FromNew().AsSingle();
             Container.BindInterfacesAndSelfTo<DetectionManager>().FromNew().AsSingle();
             Container.BindInterfacesAndSelfTo<MapManager>().FromComponentInHierarchy().AsSingle();

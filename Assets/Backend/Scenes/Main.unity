@@ -757,6 +757,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomBattleParameters: {fileID: 11400000, guid: 0c8de38b0eebba54e9ad84ceccb4f79a, type: 2}
+  shellsSettings: {fileID: 11400000, guid: c6a96659ea2e5a149ab5427278a9f98d, type: 2}
   gameParameters: {fileID: 11400000, guid: 56e7ae2dfb940af4daa1de87ef542e03, type: 2}
   mainTerrain: {fileID: 1449925694}
   battleTimer: {fileID: 1019128849}

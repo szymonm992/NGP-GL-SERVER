@@ -1,8 +1,9 @@
 using Backend.Scripts.Models;
+using Backend.Scripts.ScriptableObjects;
+using GLShared.General.Components;
 using GLShared.General.Interfaces;
 using GLShared.Networking.Components;
 using Unity.Burst;
-using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
 using Zenject;
@@ -20,8 +21,8 @@ namespace Backend.Scripts.Components
         [Inject] private readonly SignalBus signalBus;
         [Inject] private readonly ShellEntity shellEntity;
         [Inject] private readonly ISyncManager syncManager;
+        [Inject] private readonly ShellsSettings shellsSettings;
 
-        [SerializeField] private LayerMask shellsMask;
         [SerializeField] private float shellDestructionTime = 5f;
 
         private float gravity; //Ideally, should be constant.
@@ -109,9 +110,46 @@ namespace Backend.Scripts.Components
             }
         }
 
+        public bool IsInLayerMask(int layer, LayerMask layerMask)
+        {
+            return layerMask == (layerMask | (1 << layer));
+        }
+
         private void CollisionDetectionLogic()
         {
+            hasBounced = true;
+            Collider collider = collisionInfo.Collider;
+            int layerOfCol = collider.gameObject.layer;
 
+            if (IsInLayerMask(layerOfCol, shellsSettings.ObstaclesAndArmorMask))
+            {
+                if (IsInLayerMask(layerOfCol, shellsSettings.ArmorLayerMask))
+                {
+                    var armorComponent = collider.gameObject.GetComponent<Armor>();
+                    string idOfUser = armorComponent.OwnerUsername;
+
+                    //TODO: Check if player is alive
+
+                    float armorThickness = armorComponent.Thickness;
+                    float angleOfHit = CalculateAngleOfHit(transform.forward, -collisionInfo.CollisionNormal);
+                    
+                    //TODO: Check if hit is not an ally and if so then destroy object. Otherwise deal damage
+
+                    /*if (collidingCol.transform.root.tag != RoomManager.Instance.GetPlayer(shellConfig.shell_owner).Controller.gameObject.tag)
+                    {
+                        //if detected object is  in the same team
+                        ShellPassingInfo spi = ToSPIObject(shellConfig, sci, angleOfHit, armorThickness, attached_comp, idOfUser);
+                        shellReactions.FurtherLogic(spi);
+                    }
+                    else
+                        HandleDecalAndDestructionLogic(0, sci.CollisionNormal, idOfUser);*/
+                }
+            }
+            else
+            {
+                //This case should never happen btw
+                Debug.LogError("Detected unhandled mask!");
+            }
         }
 
         private void ShellStraightMovement()
@@ -153,7 +191,7 @@ namespace Backend.Scripts.Components
         private ShellCollisionInfo ReturnCollisionInfo(Vector3 desiredPosition)
         {
             var direction = desiredPosition - transform.position;
-            isColliding = Physics.Raycast(new Ray(transform.position, direction), out RaycastHit hit, direction.magnitude, shellsMask);
+            isColliding = Physics.Raycast(new Ray(transform.position, direction), out RaycastHit hit, direction.magnitude, shellsSettings.ObstaclesAndArmorMask);
 
             if (isColliding)
             {
@@ -174,6 +212,24 @@ namespace Backend.Scripts.Components
                 //Debug.DrawRay(shellray.origin, shellray.direction* lengthOfChecking, Color.red);
                 return new (false, desiredPosition, Vector3.zero, null, new LayerMask(), hit);
             }
+        }
+
+        private void RicochetLogic()
+        {
+            Vector3 reflectedAngle = Vector3.Reflect(transform.forward, collisionInfo.CollisionNormal);
+            transform.rotation = Quaternion.LookRotation(reflectedAngle);
+            //after executing this part we reset the collision detection so the ShellFreeMovement part is starting to be executed
+            isColliding = false;
+        }
+
+        private float CalculateAngleOfHit(Vector3 shellDirection, Vector3 collisionNormal)
+        {
+            return Vector3.Angle(shellDirection, collisionNormal);
+        }
+
+        private float CalculateNominalThickness(float armorThickness, float angle)
+        {
+            return armorThickness / Mathf.Cos(angle * Mathf.Deg2Rad);
         }
     }
 }
