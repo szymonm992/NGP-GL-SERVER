@@ -15,6 +15,7 @@ namespace Backend.Scripts.Components
         public override void Initialize()
         {
             base.Initialize();
+
             signalBus.Subscribe<PlayerSignals.OnPlayerShot>(OnPlayerShot);
         }
 
@@ -34,6 +35,7 @@ namespace Backend.Scripts.Components
             if (connectedPlayers.ContainsKey(input.Username))
             {
                 base.SyncInputs(input);
+
                 connectedPlayers[input.Username].InputProvider.SetInput(input);
             }
         }

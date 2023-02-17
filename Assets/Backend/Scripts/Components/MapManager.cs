@@ -25,12 +25,13 @@ namespace Backend.Scripts.Components
         public SpawnPoint GetFreeSpawnPoint(Team team)
         {
             var sortedPoints = spawnPoints.Where(point => point.SpawnPointTeam == team && point.Isfree).ToArray();
+
             if (sortedPoints.Any())
             {
                 return sortedPoints[Random.Range(0, sortedPoints.Length)];
             }
+
             return null;
         }
-
     }
 }

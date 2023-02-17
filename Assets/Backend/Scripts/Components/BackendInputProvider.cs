@@ -12,15 +12,15 @@ namespace Backend.Scripts.Components
         [Inject] private readonly SignalBus signalBus;
 
         private PlayerInput currentInput = null;
-        private float lastVertical = 0;
+        private float lastVertical;
         private bool lockPlayerInput = true;
 
         public float Vertical => currentInput.Vertical;
         public float Horizontal => currentInput.Horizontal;
         public bool Brake => currentInput.Brake;
         public float CombinedInput => AbsoluteHorizontal + AbsoluteHorizontal;
-        public float SignedVertical => Vertical != 0 ? Mathf.Sign(Vertical) : 0f;
-        public float SignedHorizontal => Horizontal != 0 ? Mathf.Sign(Horizontal): 0f;
+        public float SignedVertical => Vertical != 0f ? Mathf.Sign(Vertical) : 0f;
+        public float SignedHorizontal => Horizontal != 0f ? Mathf.Sign(Horizontal): 0f;
         public float RawVertical => currentInput.RawVertical;
         public float AbsoluteVertical => Mathf.Abs(Vertical);
         public float AbsoluteHorizontal => Mathf.Abs(Horizontal);
