@@ -1632,7 +1632,7 @@ MonoBehaviour:
   wheelRadius: 0.7
   spring: 220000
   damper: 40000
-  tireMass: 700
+  tireMass: 650
   forwardTireGripFactor: 1
   sidewaysTireGripFactor: 1
   upperConstraintTransform: {fileID: 1731640367405229891}
@@ -1729,7 +1729,7 @@ MonoBehaviour:
   wheelRadius: 0.7
   spring: 220000
   damper: 40000
-  tireMass: 700
+  tireMass: 650
   forwardTireGripFactor: 1
   sidewaysTireGripFactor: 1
   upperConstraintTransform: {fileID: 3753192924619417635}
@@ -3123,7 +3123,7 @@ MonoBehaviour:
   wheelRadius: 0.7
   spring: 220000
   damper: 40000
-  tireMass: 700
+  tireMass: 650
   forwardTireGripFactor: 1
   sidewaysTireGripFactor: 1
   upperConstraintTransform: {fileID: 767630947158634192}
@@ -3220,7 +3220,7 @@ MonoBehaviour:
   wheelRadius: 0.7
   spring: 220000
   damper: 40000
-  tireMass: 700
+  tireMass: 650
   forwardTireGripFactor: 1
   sidewaysTireGripFactor: 1
   upperConstraintTransform: {fileID: 5163380841452892586}
@@ -6665,7 +6665,7 @@ MonoBehaviour:
   wheelRadius: 0.7
   spring: 220000
   damper: 40000
-  tireMass: 700
+  tireMass: 650
   forwardTireGripFactor: 1
   sidewaysTireGripFactor: 1
   upperConstraintTransform: {fileID: 2525776757211167019}
@@ -11095,7 +11095,7 @@ MonoBehaviour:
   wheelRadius: 0.7
   spring: 220000
   damper: 40000
-  tireMass: 700
+  tireMass: 650
   forwardTireGripFactor: 1
   sidewaysTireGripFactor: 1
   upperConstraintTransform: {fileID: 629371916385171590}
@@ -11192,7 +11192,7 @@ MonoBehaviour:
   wheelRadius: 0.7
   spring: 220000
   damper: 40000
-  tireMass: 700
+  tireMass: 650
   forwardTireGripFactor: 1
   sidewaysTireGripFactor: 1
   upperConstraintTransform: {fileID: 2061467322098144334}
@@ -12904,7 +12904,7 @@ MonoBehaviour:
   wheelRadius: 0.7
   spring: 220000
   damper: 40000
-  tireMass: 700
+  tireMass: 650
   forwardTireGripFactor: 1
   sidewaysTireGripFactor: 1
   upperConstraintTransform: {fileID: 2888858036968665480}
@@ -13708,7 +13708,7 @@ MonoBehaviour:
   wheelRadius: 0.7
   spring: 220000
   damper: 40000
-  tireMass: 700
+  tireMass: 650
   forwardTireGripFactor: 1
   sidewaysTireGripFactor: 1
   upperConstraintTransform: {fileID: 1567868389148759099}
@@ -14028,45 +14028,45 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 80000
+      value: 85000
       inSlope: -985.7143
-      outSlope: -2000
+      outSlope: -3933.3333
       tangentMode: 65
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 10
-      value: 60000
-      inSlope: -2000
-      outSlope: -6800
-      tangentMode: 69
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
       time: 15
       value: 26000
-      inSlope: -6800
-      outSlope: -1100
+      inSlope: -3933.3333
+      outSlope: -1000
       tangentMode: 69
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 25
-      value: 15000
-      inSlope: -1100
-      outSlope: -166.66667
+      value: 16000
+      inSlope: -1000
+      outSlope: 0
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 40
+      value: 16000
+      inSlope: 0
+      outSlope: -200
       tangentMode: 69
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 55
-      value: 10000
-      inSlope: -166.66667
-      outSlope: -320
+      value: 13000
+      inSlope: -200
+      outSlope: -440
       tangentMode: 69
       weightedMode: 0
       inWeight: 0.33333334
@@ -14074,7 +14074,7 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 80
       value: 2000
-      inSlope: -320
+      inSlope: -440
       outSlope: -985.7143
       tangentMode: 5
       weightedMode: 0
@@ -14090,16 +14090,16 @@ MonoBehaviour:
       time: 0
       value: 80000
       inSlope: -985.7143
-      outSlope: -3200
+      outSlope: -3500
       tangentMode: 65
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 10
-      value: 48000
-      inSlope: -3200
-      outSlope: -4800
+      value: 45000
+      inSlope: -3500
+      outSlope: -4200
       tangentMode: 69
       weightedMode: 0
       inWeight: 0.33333334
@@ -14107,7 +14107,7 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 15
       value: 24000
-      inSlope: -4800
+      inSlope: -4200
       outSlope: -900
       tangentMode: 69
       weightedMode: 0
@@ -17514,7 +17514,7 @@ MonoBehaviour:
   wheelRadius: 0.7
   spring: 220000
   damper: 40000
-  tireMass: 700
+  tireMass: 650
   forwardTireGripFactor: 1
   sidewaysTireGripFactor: 1
   upperConstraintTransform: {fileID: 6507730772738900052}
