@@ -13987,7 +13987,7 @@ MonoBehaviour:
   mass: 36500
   drag: 0.2
   angularDrag: 0.5
-  steerForce: 180000
+  steerForce: 185000
   turretRotationSpeed: 48
   gunRotationSpeed: 33
   gunDepression: 5
