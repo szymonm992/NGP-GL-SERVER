@@ -37,6 +37,7 @@ namespace Backend.Scripts.Components
             }
 
             groundedWheels = GetGroundedWheels();
+            isAxleGrounded = CheckAxleGrounded();
 
             if (applyAntiroll)
             {

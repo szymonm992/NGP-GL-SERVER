@@ -550,7 +550,7 @@ GameObject:
   - component: {fileID: 888146838117914819}
   - component: {fileID: 4131620849547271266}
   - component: {fileID: 464694791648148643}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: track_spaced.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -633,7 +633,7 @@ GameObject:
   - component: {fileID: 4318381590049253108}
   - component: {fileID: 588840187146852549}
   - component: {fileID: 5181799983031308859}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: kolo_glowne.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -779,7 +779,7 @@ GameObject:
   - component: {fileID: 7609289501641505961}
   - component: {fileID: 5144926982291938847}
   - component: {fileID: 1896399223629881941}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: kolo_przod
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1244,7 +1244,7 @@ GameObject:
   - component: {fileID: 2428869511196134243}
   - component: {fileID: 3018020921189532884}
   - component: {fileID: 4885717159043310791}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: kolo_przod.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1326,7 +1326,7 @@ GameObject:
   m_Component:
   - component: {fileID: 101522176815688122}
   - component: {fileID: 739827136101651809}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ArmorSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1638,8 +1638,13 @@ MonoBehaviour:
   upperConstraintTransform: {fileID: 1731640367405229891}
   lowerConstraintTransform: {fileID: 645786928357515032}
   notGroundedTransform: {fileID: 6158239660763860781}
+  jumpMinimalSpeed: 15
+  damperOnJumpMultiplier: 0.25
   hardPointOfTire: -1
   suspensionTravel: 0.6
+  enableFallJump: 1
+  ungroundTimeMinThreshold: 0.1
+  ungroundTimeMaxThreshold: 1
   debugSettings:
     drawGizmos: 1
     drawOnDisable: 0
@@ -1735,8 +1740,13 @@ MonoBehaviour:
   upperConstraintTransform: {fileID: 3753192924619417635}
   lowerConstraintTransform: {fileID: 4799482691047801741}
   notGroundedTransform: {fileID: 6158239659468050663}
+  jumpMinimalSpeed: 15
+  damperOnJumpMultiplier: 0.25
   hardPointOfTire: -1.1
   suspensionTravel: 0.4
+  enableFallJump: 1
+  ungroundTimeMinThreshold: 0.1
+  ungroundTimeMaxThreshold: 1
   debugSettings:
     drawGizmos: 1
     drawOnDisable: 0
@@ -2437,7 +2447,7 @@ GameObject:
   - component: {fileID: 3604481067903185839}
   - component: {fileID: 7445313097554135322}
   - component: {fileID: 1351798626557212290}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: kolo_glowne.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2872,7 +2882,7 @@ GameObject:
   - component: {fileID: 2560602269812533032}
   - component: {fileID: 9587052309937494}
   - component: {fileID: 3077917744236542900}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: kolo_glowne.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3129,8 +3139,13 @@ MonoBehaviour:
   upperConstraintTransform: {fileID: 767630947158634192}
   lowerConstraintTransform: {fileID: 8515343377853109988}
   notGroundedTransform: {fileID: 6158239660159036151}
+  jumpMinimalSpeed: 15
+  damperOnJumpMultiplier: 0.25
   hardPointOfTire: -1.1
   suspensionTravel: 0.4
+  enableFallJump: 1
+  ungroundTimeMinThreshold: 0.1
+  ungroundTimeMaxThreshold: 1
   debugSettings:
     drawGizmos: 1
     drawOnDisable: 0
@@ -3226,8 +3241,13 @@ MonoBehaviour:
   upperConstraintTransform: {fileID: 5163380841452892586}
   lowerConstraintTransform: {fileID: 4734957668156745136}
   notGroundedTransform: {fileID: 6158239659174709487}
+  jumpMinimalSpeed: 15
+  damperOnJumpMultiplier: 0.25
   hardPointOfTire: -1.1
   suspensionTravel: 0.4
+  enableFallJump: 1
+  ungroundTimeMinThreshold: 0.1
+  ungroundTimeMaxThreshold: 1
   debugSettings:
     drawGizmos: 1
     drawOnDisable: 0
@@ -6671,8 +6691,13 @@ MonoBehaviour:
   upperConstraintTransform: {fileID: 2525776757211167019}
   lowerConstraintTransform: {fileID: 2136573732686987573}
   notGroundedTransform: {fileID: 6158239659283684311}
+  jumpMinimalSpeed: 15
+  damperOnJumpMultiplier: 0.25
   hardPointOfTire: -1
   suspensionTravel: 0.6
+  enableFallJump: 1
+  ungroundTimeMinThreshold: 0.1
+  ungroundTimeMaxThreshold: 1
   debugSettings:
     drawGizmos: 1
     drawOnDisable: 0
@@ -6846,7 +6871,7 @@ GameObject:
   - component: {fileID: 312026944687980527}
   - component: {fileID: 3560393868712728864}
   - component: {fileID: 7776321933957283821}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: kolo_glowne.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8187,7 +8212,7 @@ GameObject:
   - component: {fileID: 8057947413343929232}
   - component: {fileID: 4752482510926630789}
   - component: {fileID: 3353102438315733403}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: kolo_glowne.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8398,7 +8423,7 @@ GameObject:
   - component: {fileID: 4366136975325419101}
   - component: {fileID: 2675349778208082807}
   - component: {fileID: 7179980016888348684}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: kolo_glowne
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10662,7 +10687,7 @@ GameObject:
   - component: {fileID: 7814832038977407210}
   - component: {fileID: 9034242689927220944}
   - component: {fileID: 1303538233858663458}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: kolo_tyl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10777,7 +10802,7 @@ GameObject:
   - component: {fileID: 5828979335980021730}
   - component: {fileID: 4750976051465777790}
   - component: {fileID: 1007110184773536394}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: kolo_glowne.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11147,8 +11172,13 @@ MonoBehaviour:
   upperConstraintTransform: {fileID: 629371916385171590}
   lowerConstraintTransform: {fileID: 390416389590693438}
   notGroundedTransform: {fileID: 3449597405030965744}
+  jumpMinimalSpeed: 15
+  damperOnJumpMultiplier: 0.25
   hardPointOfTire: -1
   suspensionTravel: 0.6
+  enableFallJump: 1
+  ungroundTimeMinThreshold: 0.1
+  ungroundTimeMaxThreshold: 1
   debugSettings:
     drawGizmos: 1
     drawOnDisable: 0
@@ -11244,8 +11274,13 @@ MonoBehaviour:
   upperConstraintTransform: {fileID: 2061467322098144334}
   lowerConstraintTransform: {fileID: 218861961731959643}
   notGroundedTransform: {fileID: 6158239660498785531}
+  jumpMinimalSpeed: 15
+  damperOnJumpMultiplier: 0.25
   hardPointOfTire: -1.1
   suspensionTravel: 0.4
+  enableFallJump: 1
+  ungroundTimeMinThreshold: 0.1
+  ungroundTimeMaxThreshold: 1
   debugSettings:
     drawGizmos: 1
     drawOnDisable: 0
@@ -11957,7 +11992,7 @@ GameObject:
   - component: {fileID: 5182694535408168835}
   - component: {fileID: 1029574855687148936}
   - component: {fileID: 1606912213939714742}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: kolo_glowne.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12956,8 +12991,13 @@ MonoBehaviour:
   upperConstraintTransform: {fileID: 2888858036968665480}
   lowerConstraintTransform: {fileID: 4005148593997709437}
   notGroundedTransform: {fileID: 6158239658846214369}
+  jumpMinimalSpeed: 15
+  damperOnJumpMultiplier: 0.25
   hardPointOfTire: -1.1
   suspensionTravel: 0.4
+  enableFallJump: 1
+  ungroundTimeMinThreshold: 0.1
+  ungroundTimeMaxThreshold: 1
   debugSettings:
     drawGizmos: 1
     drawOnDisable: 0
@@ -13138,7 +13178,7 @@ MonoBehaviour:
   terrainMask:
     serializedVersion: 2
     m_Bits: 64
-  idlerWheelOffset: {x: 0, y: 0, z: -0.2}
+  idlerWheelOffset: {x: 0, y: 0, z: -0.25}
   idlerSite: -1
   debugSettings:
     drawGizmos: 1
@@ -13241,7 +13281,7 @@ MonoBehaviour:
   terrainMask:
     serializedVersion: 2
     m_Bits: 64
-  idlerWheelOffset: {x: 0, y: 0, z: -0.2}
+  idlerWheelOffset: {x: 0, y: 0, z: -0.25}
   idlerSite: -1
   debugSettings:
     drawGizmos: 1
@@ -13760,8 +13800,13 @@ MonoBehaviour:
   upperConstraintTransform: {fileID: 1567868389148759099}
   lowerConstraintTransform: {fileID: 707138333865522819}
   notGroundedTransform: {fileID: 6158239660769510336}
+  jumpMinimalSpeed: 15
+  damperOnJumpMultiplier: 0.25
   hardPointOfTire: -1
   suspensionTravel: 0.6
+  enableFallJump: 1
+  ungroundTimeMinThreshold: 0.1
+  ungroundTimeMaxThreshold: 1
   debugSettings:
     drawGizmos: 1
     drawOnDisable: 0
@@ -14054,7 +14099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectType: 0
   isSender: 1
-  tickRate: 66
+  tickRate: 90
 --- !u!114 &6212946819241629232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14181,7 +14226,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   idlerBumpingMultiplier: 0.7
-  doesGravityDamping: 0
   wheelsCollisionDetectionMask:
     serializedVersion: 2
     m_Bits: 375
@@ -14848,7 +14892,7 @@ GameObject:
   - component: {fileID: 5112276511641021985}
   - component: {fileID: 2457198502208694238}
   - component: {fileID: 2936033120670857612}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: kolo_glowne.009
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17567,8 +17611,13 @@ MonoBehaviour:
   upperConstraintTransform: {fileID: 6507730772738900052}
   lowerConstraintTransform: {fileID: 4163286327330514587}
   notGroundedTransform: {fileID: 6158239659848622701}
+  jumpMinimalSpeed: 15
+  damperOnJumpMultiplier: 0.25
   hardPointOfTire: -1.1
   suspensionTravel: 0.4
+  enableFallJump: 1
+  ungroundTimeMinThreshold: 0.1
+  ungroundTimeMaxThreshold: 1
   debugSettings:
     drawGizmos: 1
     drawOnDisable: 0
@@ -17587,7 +17636,7 @@ GameObject:
   - component: {fileID: 847134086003403868}
   - component: {fileID: 7457017215270124576}
   - component: {fileID: 5455508366685202747}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: kolo_glowne.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17947,7 +17996,7 @@ GameObject:
   - component: {fileID: 7691917858350100962}
   - component: {fileID: 3962685467290469307}
   - component: {fileID: 6283224795508426559}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: track_spaced
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18289,7 +18338,7 @@ GameObject:
   - component: {fileID: 4311386436610505368}
   - component: {fileID: 7485930261851998116}
   - component: {fileID: 5138578865081390635}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: kolo_tyl.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}

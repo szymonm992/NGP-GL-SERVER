@@ -867,6 +867,10 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 13400000, guid: 4372d5bab3024ec4ea27579b5d3d4179, type: 2}
+    - target: {fileID: 7457661331533933796, guid: 31962fa81fabe514c825d8d1edf8b018, type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7457661331533933797, guid: 31962fa81fabe514c825d8d1edf8b018, type: 3}
       propertyPath: m_Name
       value: Terrain (1)
