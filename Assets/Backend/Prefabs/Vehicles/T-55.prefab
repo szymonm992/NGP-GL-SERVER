@@ -14099,7 +14099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectType: 0
   isSender: 1
-  tickRate: 90
+  tickRate: 60
 --- !u!114 &6212946819241629232
 MonoBehaviour:
   m_ObjectHideFlags: 0
