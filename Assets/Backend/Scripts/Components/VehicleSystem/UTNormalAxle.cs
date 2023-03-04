@@ -17,6 +17,7 @@ namespace Backend.Scripts.Components
         public override void Initialize()
         {
             base.Initialize();
+
             leftAntirolled = GetAllWheelsOfAxis(DriveAxisSite.Left).First();
             rightAntirolled = GetAllWheelsOfAxis(DriveAxisSite.Right).First();
         }
@@ -43,7 +44,6 @@ namespace Backend.Scripts.Components
             {
                 CalculateAndApplyAntiroll();
             }
-
         }
 
         private void CalculateAndApplyAntiroll()
